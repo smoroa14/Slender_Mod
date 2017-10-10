@@ -17,7 +17,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Mod.EventBusSubscriber(modid = SlenderMod.MODID)
 public class CommonProxy {
     //public static Block FLINT_STONE_BLOCK = new FlintstoneBlock("fredblock");
-    public static Item Batterie = new Batterie("batterie");
+    public static Item BATTERIE = new Batterie("batterie");
     public void init(FMLInitializationEvent event){}
     public void preInit(FMLPreInitializationEvent event){}
     public void postInit(FMLPostInitializationEvent event){}
@@ -32,14 +32,14 @@ public class CommonProxy {
     public static void registerItems(RegistryEvent.Register<Item> event)
     {
         //event.getRegistry().register(new ItemBlock(FLINT_STONE_BLOCK).setRegistryName(FLINT_STONE_BLOCK.getRegistryName()));
-        //event.getRegistry().register(WATER_VIRUS_BUCKET);
+        event.getRegistry().register(BATTERIE);
     }
 
     @SubscribeEvent
     public static void registerRenderers(ModelRegistryEvent event)
     {
         //registerRenderer(Item.getItemFromBlock(FLINT_STONE_BLOCK));
-        //registerRenderer(WATER_VIRUS_BUCKET);
+        registerRenderer(BATTERIE);
     }
 
     private static void registerRenderer(Item item)
