@@ -1,11 +1,12 @@
 package com.smoroa14_kevox.slendermod;
 
+import com.smoroa14_kevox.slendermod.proxy.CommonProxy;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
 import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent
+import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
 
 @Mod(modid = SlenderMod.MODID, version = SlenderMod.VERSION)
 public class SlenderMod
