@@ -1,6 +1,7 @@
 package com.smoroa14_kevox.slendermod.proxy;
 
 import com.smoroa14_kevox.slendermod.SlenderMod;
+import com.smoroa14_kevox.slendermod.items.Batterie;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -16,7 +17,7 @@ import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
 @Mod.EventBusSubscriber(modid = SlenderMod.MODID)
 public class CommonProxy {
     //public static Block FLINT_STONE_BLOCK = new FlintstoneBlock("fredblock");
-
+    public static Item Batterie = new Batterie("batterie");
     public void init(FMLInitializationEvent event){}
     public void preInit(FMLPreInitializationEvent event){}
     public void postInit(FMLPostInitializationEvent event){}
