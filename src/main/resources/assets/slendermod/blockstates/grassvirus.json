@@ -1,0 +1,24 @@
+{
+  "forge_marker": 1,
+  "defaults": {
+    "textures": {
+      "all": "blocks/dirt"
+    },
+    "model": "cube_all",
+    "uvlock": true
+  },
+  "variants": {
+    "normal": [{
+      "textures": {
+        "north": "virusmod:blocks/grassvirus_side",
+        "east": "virusmod:blocks/grassvirus_side",
+        "south": "virusmod:blocks/grassvirus_side",
+        "west": "virusmod:blocks/grassvirus_side",
+        "up": "virusmod:blocks/grassvirus_up",
+        "down": "virusmod:blocks/grassvirus_down"
+      },
+      "model": "cube_column"
+    }],
+    "inventory": [{}]
+  }
+}

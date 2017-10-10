@@ -1,0 +1,27 @@
+/*{
+  "parent":"block/cube_all",
+  "textures": {
+    "north": "blocks/cobblestone",
+    "east": "blocks/cobblestone",
+    "west": "blocks/cobblestone",
+    "south": "blocks/cobblestone",
+    "bottom": "blocks/dirt",
+    "top": "blocks/dirt"
+  }
+}*/
+
+{
+  "elements": [
+    {   "from": [ 0, 0, 0 ],
+      "to": [ 16, 16, 16 ],
+      "faces": {
+        "down":  { "texture": "virusmod:blocks/grassvirus_down", "cullface": "down" },
+        "up":    { "texture": "virusmod:blocks/grassvirus_up", "cullface": "up" },
+        "north": { "texture": "virusmod:blocks/grassvirus_side", "cullface": "north" },
+        "south": { "texture": "virusmod:blocks/grassvirus_side", "cullface": "south" },
+        "west":  { "texture": "virusmod:blocks/grassvirus_side", "cullface": "west" },
+        "east":  { "texture": "virusmod:blocks/grassvirus_side", "cullface": "east" }
+      }
+    }
+  ]
+}

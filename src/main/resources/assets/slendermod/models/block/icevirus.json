@@ -1,0 +1,12 @@
+{
+  "parent":"block/cube_all",
+  "textures": {
+    "north": "blocks/ice",
+    "east": "blocks/ice",
+    "west": "blocks/ice",
+    "south": "blocks/ice",
+    "bottom": "blocks/ice",
+    "top": "blocks/ice"
+  }
+}
+
