@@ -1,5 +1,6 @@
 package com.smoroa14_kevox.slendermod.items;
 
+import javafx.scene.LightBase;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
@@ -14,6 +15,9 @@ import java.util.Set;
 
 
 public class Taschenlampe extends ItemTool{
+
+    public boolean activated = false;
+
     public Taschenlampe(ToolMaterial materialIn, Set<Block> effectiveBlocksIn, String name) {
         super(materialIn, effectiveBlocksIn);
         this.setRegistryName(name);
@@ -23,6 +27,13 @@ public class Taschenlampe extends ItemTool{
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+        if(!activated)
+        {
+            activated = true;
+            System.out.println(activated);
+
+
+        }
         return super.onItemRightClick(worldIn, playerIn, handIn);
     }
 }

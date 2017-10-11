@@ -8,5 +8,7 @@ public class Batterie extends Item{
         this.setRegistryName(name);
         this.setUnlocalizedName(name);
         this.setCreativeTab(CreativeTabs.MISC);
+        this.setMaxStackSize(6);
     }
+
 }
