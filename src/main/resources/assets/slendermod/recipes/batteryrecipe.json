@@ -1,19 +1,28 @@
 {
 "type": "minecraft:crafting_shaped",
 "pattern": [
-"AAA",
-"AAA",
-"AAA"  ],
+" A ",
+"ABA",
+"ABA"  ],
 "key": {
 "A": [
 {
-"item": "stm:tutorialingot",
+"item": "minecraft:iron_ingot",
 "data": 0
 }
 ]
+
+,
+  "B": [
+    {
+      "item": "minecraft:redstone",
+      "data": 0
+    }
+  ]
+
 },
 "result": {
-"item": "stm:tutorialblock",
+"item": "slendermod:batterie",
 "data": 0
 }
 }
