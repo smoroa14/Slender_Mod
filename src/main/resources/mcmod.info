@@ -21,9 +21,9 @@
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["ExampleDude"],
+  "authorList": ["Kevox", "coca22COCA"],
   "credits": "The Forge and FML guys, for making this example",
-  "logoFile": "assets/virusmod/textures/virus.png",
+  "logoFile": "assets/slendermod/textures/slender.png",
   "screenshots": [],
   "dependencies": []
 }
