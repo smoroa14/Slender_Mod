@@ -2,5 +2,23 @@
  "parent": "builtin/generated",
  "textures": {
   "layer0": "slendermod:items/batterie"
+ },
+ "display": {
+
+ "thirdperson": {
+  "rotation": [ 0, 0, 0 ],
+  "translation": [ 0, 0, 0 ],
+  "scale": [ 0.25, 0.25, 0.25 ]
+ },
+ "firstperson": {
+  "rotation": [ 0, 0, 0 ],
+  "translation": [ 0, 0, 0 ],
+  "scale": [ 0.25, 0.25, 0.25 ]
+ },
+ "gui": {
+  "rotation": [ 0, 0, 0 ],
+  "translation": [ 0, 0, 0 ],
+  "scale": [ 1.0, 1.0, 1.0 ]
  }
+}
 }
