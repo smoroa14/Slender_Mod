@@ -1,0 +1,28 @@
+{
+"type": "minecraft:crafting_shaped",
+"pattern": [
+"AAA",
+"BCB",
+"AAA"  ],
+"key": {
+"A": [
+{
+"item": "minecraft:wood",
+"data": 0
+}
+]
+
+,
+  "B": [
+    {
+      "item": "minecraft:stick",
+      "data": 0
+    }
+  ]
+
+},
+"result": {
+"item": "minecraft:torch",
+"data": 0
+}
+}

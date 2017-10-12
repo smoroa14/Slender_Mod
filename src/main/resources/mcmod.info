@@ -40,7 +40,7 @@
   "updateUrl": "",
   "authorList": ["Kevox", "coca22COCA"],
   "credits": "The Forge and FML guys, for making this example",
-  "logoFile": "assets/slendermod/textures/slender.png",
+  "logoFile": "",
   "screenshots": [],
   "dependencies": []
 }
