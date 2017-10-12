@@ -1,11 +1,11 @@
 ﻿{
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
 	"textures": {
-		"0": "blocks/978oF",
-		"1": "blocks/FC5OM79HFD1ESOA.MEDIUM.jpg",
-		"2": "blocks/il_570xN.839219362_k7kz.jpg",
-		"3": "blocks/iron",
-		"particle": "blocks/978oF"
+		"0": "items/wood",
+		"1": "items/glowstone",
+		"2": "items/log",
+		"3": "items/iron",
+		"particle": "items/wood"
 	},
 	"elements": [
 		{
