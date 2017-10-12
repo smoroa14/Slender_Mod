@@ -1,28 +1,33 @@
 {
-"type": "minecraft:crafting_shaped",
-"pattern": [
-"AAA",
-"BCB",
-"AAA"  ],
-"key": {
-"A": [
-{
-"item": "minecraft:wood",
-"data": 0
-}
-]
+  "type": "minecraft:crafting_shaped",
+  "pattern": [
+    "AAA",
+    "BCB",
+    "AAA"
+  ],
+  "key": {
+    "A": [
+      {
+        "item": "minecraft:log",
+        "data": 0
+      }
+    ],
+    "B": [
+      {
+        "item": "minecraft:stick",
+        "data": 0
+      }
+    ],
+    "C": [
+      {
+        "item": "minecraft:glowstone",
+        "data": 0
+      }
+    ]
+  },
 
-,
-  "B": [
-    {
-      "item": "minecraft:stick",
-      "data": 0
-    }
-  ]
-
-},
-"result": {
-"item": "minecraft:torch",
-"data": 0
-}
+  "result": {
+    "item": "slendermod:laterne",
+    "data": 0
+  }
 }
