@@ -2,7 +2,8 @@ package com.smoroa14_kevox.slendermod.proxy;
 
 import com.smoroa14_kevox.slendermod.SlenderMod;
 import com.smoroa14_kevox.slendermod.items.Batterie;
-import com.smoroa14_kevox.slendermod.items.Taschenlampe;
+import com.smoroa14_kevox.slendermod.items.Laterne;
+
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
@@ -22,7 +23,7 @@ import java.util.TreeSet;
 public class CommonProxy {
     //public static Block FLINT_STONE_BLOCK = new FlintstoneBlock("fredblock");
     public static Item BATTERIE = new Batterie("batterie");
-    public static ItemTool TASCHENLAMPE = new Taschenlampe(Item.ToolMaterial.IRON, new TreeSet<>(), "taschenlampe");
+    public static ItemTool LATERNE = new Laterne(Item.ToolMaterial.IRON, new TreeSet<>(), "laterne");
 
 
     public void init(FMLInitializationEvent event){}
@@ -40,7 +41,7 @@ public class CommonProxy {
     {
         //event.getRegistry().register(new ItemBlock(FLINT_STONE_BLOCK).setRegistryName(FLINT_STONE_BLOCK.getRegistryName()));
         event.getRegistry().register(BATTERIE);
-        event.getRegistry().register(TASCHENLAMPE);
+        event.getRegistry().register(LATERNE);
     }
 
     @SubscribeEvent
@@ -48,7 +49,7 @@ public class CommonProxy {
     {
         //registerRenderer(Item.getItemFromBlock(FLINT_STONE_BLOCK));
         registerRenderer(BATTERIE);
-        registerRenderer(TASCHENLAMPE);
+        registerRenderer(LATERNE);
     }
 
     private static void registerRenderer(Item item)

@@ -14,11 +14,11 @@ import net.minecraft.world.World;
 import java.util.Set;
 
 
-public class Taschenlampe extends ItemTool{
+public class Laterne extends ItemTool{
 
     public boolean activated = false;
 
-    public Taschenlampe(ToolMaterial materialIn, Set<Block> effectiveBlocksIn, String name) {
+    public Laterne(ToolMaterial materialIn, Set<Block> effectiveBlocksIn, String name) {
         super(materialIn, effectiveBlocksIn);
         this.setRegistryName(name);
         this.setUnlocalizedName(name);

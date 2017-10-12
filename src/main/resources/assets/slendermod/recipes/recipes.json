@@ -2,7 +2,7 @@
   "type": "minecraft:crafting_shapeless",
   "ingredients": [
     {
-      "item": "slendermod:taschenlampe",
+      "item": "slendermod:laterne",
       "data": 0
     },
     {
@@ -11,7 +11,7 @@
     }
   ],
   "result": {
-    "item": "slendermod:taschenlampe",
+    "item": "slendermod:laterne",
     "data": 0
   }
 }
