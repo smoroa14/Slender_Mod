@@ -77,7 +77,7 @@ public class PlayerSelfLightSource implements IDynamicLightSource
     {
         config.load();
         
-        Property itemsList = config.get(Configuration.CATEGORY_GENERAL, "LightItems", "torch,glowstone=12, glowstone_dust=10,lit_pumpkin,lava_bucket,redstone_torch=10,redstone=10,golden_helmet=14,golden_horse_armor=15");
+        Property itemsList = config.get(Configuration.CATEGORY_GENERAL, "LightItems", "torch,glowstone=12, glowstone_dust=10,lit_pumpkin,lava_bucket,redstone_torch=10,redstone=10,golden_helmet=14,golden_horse_armor=15, laterne=15");
         itemsList.setComment("Item IDs that shine light while held. Armor Items also work when worn. [ONLY ON YOURSELF]");
         itemsMap = new ItemConfigHelper(itemsList.getString(), 15);
         
@@ -109,24 +109,20 @@ public class PlayerSelfLightSource implements IDynamicLightSource
         {
             FMLInterModComms.sendRuntimeMessage("dynamiclights", "slendermod", "forceplayerlighton", "laterne");
             List<IMCMessage> messages = FMLInterModComms.fetchRuntimeMessages(this);
-            System.out.println(messages.size() + " !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
             if (messages.size() > 0)
             {
-                System.out.println("enable light111 ---------------------------------------------------------------------------");
                 // just get the last one
                 IMCMessage imcMessage = messages.get(messages.size()-1);
                 if (imcMessage.key.equalsIgnoreCase("forceplayerlighton"))
                 {
-                    System.out.println("enable light222 ---------------------------------------------------------------------------");
                     if (!fmlOverrideEnable)
                     {
-                        System.out.println("enable light333 ---------------------------------------------------------------------------");
                         fmlOverrideEnable = true;
                         if (!enabled)
                         {
-                            System.out.println("enable light444 ---------------------------------------------------------------------------");
                             lightLevel = 15;
                             enableLight();
+                            System.out.println("light");
                         }
                     }
                 }
