@@ -20,6 +20,7 @@ import java.util.Set;
 public class Laterne extends ItemTool implements IDynamicLightSource {
 
     public boolean activated = false;
+    public EntityPlayer p = null;
 
     public Laterne(ToolMaterial materialIn, Set<Block> effectiveBlocksIn, String name) {
         super(materialIn, effectiveBlocksIn);
@@ -30,11 +31,14 @@ public class Laterne extends ItemTool implements IDynamicLightSource {
 
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
+        p = playerIn;
         if(!activated)
         {
             activated = true;
             System.out.println(activated);
             DynamicLights.addLightSource(this);
+            System.out.println(DynamicLights.globalLightsOff());
+
 
         }else{
             DynamicLights.removeLightSource(this);
@@ -44,7 +48,7 @@ public class Laterne extends ItemTool implements IDynamicLightSource {
 
     @Override
     public Entity getAttachmentEntity() {
-        return null;
+        return p;
     }
 
     @Override
