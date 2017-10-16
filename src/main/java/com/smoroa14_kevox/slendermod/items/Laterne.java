@@ -34,16 +34,34 @@ public class Laterne extends ItemTool implements IDynamicLightSource {
         p = playerIn;
         if(!activated)
         {
-            activated = true;
-            System.out.println(activated);
-            DynamicLights.addLightSource(this);
-            System.out.println(DynamicLights.globalLightsOff());
-
-
+            enableLight();
         }else{
-            DynamicLights.removeLightSource(this);
+            disableLight();
         }
+        System.out.println(activated);
         return super.onItemRightClick(worldIn, playerIn, handIn);
+    }
+
+    public void onTick()
+    {
+        if(activated)
+        {
+            enableLight();
+        }else{
+            disableLight();
+        }
+    }
+
+    private void enableLight()
+    {
+        activated = true;
+        DynamicLights.addLightSource(this);
+    }
+
+    private void disableLight()
+    {
+        activated = false;
+        DynamicLights.removeLightSource(this);
     }
 
     @Override
