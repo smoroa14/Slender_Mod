@@ -107,7 +107,6 @@ public class PlayerSelfLightSource implements IDynamicLightSource
 
         if (thePlayer != null && thePlayer.isEntityAlive() && !DynamicLights.globalLightsOff())
         {
-            FMLInterModComms.sendRuntimeMessage("dynamiclights", "slendermod", "forceplayerlighton", "laterne");
             List<IMCMessage> messages = FMLInterModComms.fetchRuntimeMessages(this);
             if (messages.size() > 0)
             {
