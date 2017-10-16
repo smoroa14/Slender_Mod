@@ -1,8 +1,11 @@
 package com.smoroa14_kevox.slendermod.items;
 
+import atomicstryker.dynamiclights.client.DynamicLights;
+import atomicstryker.dynamiclights.client.IDynamicLightSource;
 import javafx.scene.LightBase;
 import net.minecraft.block.Block;
 import net.minecraft.creativetab.CreativeTabs;
+import net.minecraft.entity.Entity;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.ItemDye;
 import net.minecraft.item.ItemStack;
@@ -14,7 +17,7 @@ import net.minecraft.world.World;
 import java.util.Set;
 
 
-public class Laterne extends ItemTool{
+public class Laterne extends ItemTool implements IDynamicLightSource {
 
     public boolean activated = false;
 
@@ -31,9 +34,23 @@ public class Laterne extends ItemTool{
         {
             activated = true;
             System.out.println(activated);
+            DynamicLights.addLightSource(this);
 
-
+        }else{
+            DynamicLights.removeLightSource(this);
         }
         return super.onItemRightClick(worldIn, playerIn, handIn);
     }
+
+    @Override
+    public Entity getAttachmentEntity() {
+        return null;
+    }
+
+    @Override
+    public int getLightLevel() {
+        return 10;
+    }
 }
+
+
