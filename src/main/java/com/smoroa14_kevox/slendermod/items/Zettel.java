@@ -14,10 +14,4 @@ public class Zettel extends ItemBook{
         this.setUnlocalizedName(name);
         this.setCreativeTab(CreativeTabs.MISC);
     }
-
-    @Override
-    public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
-
-    return super.onItemRightClick(worldIn, playerIn, handIn);
-    }
 }
