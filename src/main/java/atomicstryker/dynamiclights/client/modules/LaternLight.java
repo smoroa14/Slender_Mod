@@ -1,56 +1,55 @@
 package atomicstryker.dynamiclights.client.modules;
 
-import atomicstryker.dynamiclights.client.DynamicLights;
-import atomicstryker.dynamiclights.client.IDynamicLightSource;
-import atomicstryker.dynamiclights.client.ItemConfigHelper;
-import net.minecraft.client.Minecraft;
-import net.minecraft.client.entity.EntityOtherPlayerMP;
-import net.minecraft.entity.Entity;
-import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.ItemStack;
-import net.minecraftforge.common.MinecraftForge;
-import net.minecraftforge.common.config.Configuration;
-import net.minecraftforge.common.config.Property;
-import net.minecraftforge.fml.client.FMLClientHandler;
-import net.minecraftforge.fml.common.Mod;
-import net.minecraftforge.fml.common.Mod.EventHandler;
-import net.minecraftforge.fml.common.event.FMLInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
-import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
-import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
-import net.minecraftforge.fml.common.gameevent.TickEvent;
+        import atomicstryker.dynamiclights.client.DynamicLights;
+        import atomicstryker.dynamiclights.client.IDynamicLightSource;
+        import atomicstryker.dynamiclights.client.ItemConfigHelper;
+        import net.minecraft.client.Minecraft;
+        import net.minecraft.client.entity.EntityOtherPlayerMP;
+        import net.minecraft.entity.Entity;
+        import net.minecraft.entity.player.EntityPlayer;
+        import net.minecraft.item.ItemStack;
+        import net.minecraftforge.common.MinecraftForge;
+        import net.minecraftforge.common.config.Configuration;
+        import net.minecraftforge.common.config.Property;
+        import net.minecraftforge.fml.client.FMLClientHandler;
+        import net.minecraftforge.fml.common.Mod;
+        import net.minecraftforge.fml.common.Mod.EventHandler;
+        import net.minecraftforge.fml.common.event.FMLInitializationEvent;
+        import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
+        import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+        import net.minecraftforge.fml.common.eventhandler.SubscribeEvent;
+        import net.minecraftforge.fml.common.gameevent.TickEvent;
 
-import java.util.ArrayList;
-import java.util.Iterator;
-import java.util.List;
+        import java.util.ArrayList;
+        import java.util.Iterator;
+        import java.util.List;
 
 /**
- * 
+ *
  * @author AtomicStryker
  *
  * Offers Dynamic Light functionality to Player Entities that aren't the client.
  * Handheld Items and Armor can give off Light through this Module.
  *
  */
-@Mod(modid = "dynamiclights_otherplayers", name = "Dynamic Lights Other Player Light", version = "1.0.9", dependencies = "required-after:dynamiclights")
-public class PlayerOthersLightSource
-{
+@Mod(modid = "dynamiclights_laternenlicht", name = "Dynamic Lights Laternenlicht", version = "1.0.0", dependencies = "required-after:dynamiclights")
+public class LaternLight {
     private Minecraft mcinstance;
     private long nextUpdate;
     private long updateInterval;
     private ArrayList<OtherPlayerAdapter> trackedPlayers;
     private boolean threadRunning;
-    
+
     private ItemConfigHelper itemsMap;
     private Configuration config;
-    
+
     @EventHandler
     public void preInit(FMLPreInitializationEvent evt)
     {
-        config = new Configuration(evt.getSuggestedConfigurationFile());        
+        config = new Configuration(evt.getSuggestedConfigurationFile());
         MinecraftForge.EVENT_BUS.register(this);
     }
-    
+
     @EventHandler
     public void load(FMLInitializationEvent evt)
     {
@@ -59,30 +58,30 @@ public class PlayerOthersLightSource
         trackedPlayers = new ArrayList<>();
         threadRunning = false;
     }
-    
+
     @EventHandler
     public void modsLoaded(FMLPostInitializationEvent evt)
     {
         config.load();
-        
+
         Property itemsList = config.get(Configuration.CATEGORY_GENERAL, "LightItems", "torch,glowstone=12,glowstone_dust=10,lit_pumpkin,lava_bucket,redstone_torch=10,redstone=10,golden_helmet=14");
         itemsList.setComment("Item IDs that shine light while held. Armor Items also work when worn. [ONLY ON OTHERS] Syntax: ItemID[-MetaValue]:LightValue, seperated by commas");
         itemsMap = new ItemConfigHelper(itemsList.getString(), 15);
-        
+
         Property updateI = config.get(Configuration.CATEGORY_GENERAL, "update Interval", 1000);
         updateI.setComment("Update Interval time for all other player entities in milliseconds. The lower the better and costlier.");
         updateInterval = updateI.getInt();
-        
+
         config.save();
     }
-    
+
     @SubscribeEvent
     public void onTick(TickEvent.ClientTickEvent tick)
     {
         if (mcinstance.world != null && System.currentTimeMillis() > nextUpdate && !DynamicLights.globalLightsOff())
         {
             nextUpdate = System.currentTimeMillis() + updateInterval;
-            
+
             if (!threadRunning)
             {
                 Thread thread = new OtherPlayerChecker(mcinstance.world.loadedEntityList);
@@ -90,9 +89,9 @@ public class PlayerOthersLightSource
                 thread.start();
                 threadRunning = true;
             }
-        }   
+        }
     }
-    
+
     private int getLightFromItemStack(ItemStack stack)
     {
         if (stack != null)
@@ -102,21 +101,21 @@ public class PlayerOthersLightSource
         }
         return 0;
     }
-    
+
     private class OtherPlayerChecker extends Thread
     {
         private final Object[] list;
-        
+
         public OtherPlayerChecker(List<Entity> input)
         {
             list = input.toArray();
         }
-        
+
         @Override
         public void run()
         {
             ArrayList<OtherPlayerAdapter> newList = new ArrayList<>();
-            
+
             Entity ent;
             for (Object o : list)
             {
@@ -140,7 +139,7 @@ public class PlayerOthersLightSource
                             break;
                         }
                     }
-                    
+
                     if (!found) // wasnt already tracked
                     {
                         // make new, tick, put in new list
@@ -154,23 +153,23 @@ public class PlayerOthersLightSource
             trackedPlayers = newList;
             threadRunning = false;
         }
-        
+
     }
-    
+
     private class OtherPlayerAdapter implements IDynamicLightSource
     {
-        
+
         private EntityPlayer player;
         private int lightLevel;
         private boolean enabled;
-        
+
         public OtherPlayerAdapter(EntityPlayer p)
         {
             lightLevel = 0;
             enabled = false;
             player = p;
         }
-        
+
         /**
          * Since they are IDynamicLightSource instances, they will already receive updates! Why do we need
          * to do this? Because Player Entities can change equipment and we really don't want this method
@@ -179,25 +178,25 @@ public class PlayerOthersLightSource
         public void onTick()
         {
             int prevLight = lightLevel;
-            
+
             lightLevel = Math.max(getLightFromItemStack(player.getHeldItemMainhand()), getLightFromItemStack(player.getHeldItemOffhand()));
             for (ItemStack armor : player.inventory.armorInventory)
             {
                 lightLevel = Math.max(lightLevel, getLightFromItemStack(armor));
             }
-            
+
             if (prevLight != 0 && lightLevel != prevLight)
             {
                 lightLevel = 0;
             }
             else
-            {                    
+            {
                 if (player.isBurning())
                 {
                     lightLevel = 15;
                 }
             }
-            
+
             if (!enabled && lightLevel > 0)
             {
                 enableLight();
@@ -208,19 +207,19 @@ public class PlayerOthersLightSource
             }
         }
 
-        
+
         private void enableLight()
         {
             DynamicLights.addLightSource(this);
             enabled = true;
         }
-        
+
         private void disableLight()
         {
             DynamicLights.removeLightSource(this);
             enabled = false;
         }
-     
+
         @Override
         public Entity getAttachmentEntity()
         {
