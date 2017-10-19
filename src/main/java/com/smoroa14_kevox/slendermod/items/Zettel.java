@@ -20,6 +20,8 @@ public class Zettel extends ItemWritableBook{
         this.setRegistryName(name);
         this.setUnlocalizedName(name);
         this.setCreativeTab(CreativeTabs.MISC);
+    this.isDamageable();
+    this.isRepairable();
     }
 
     @Override
