@@ -77,9 +77,9 @@ public class PlayerSelfLightSource implements IDynamicLightSource
     {
         config.load();
         
-        Property itemsList = config.get(Configuration.CATEGORY_GENERAL, "LightItems", "torch,glowstone=12, glowstone_dust=10,lit_pumpkin,lava_bucket,redstone_torch=10,redstone=10,golden_helmet=14,golden_horse_armor=15");
+        Property itemsList = config.get(Configuration.CATEGORY_GENERAL, "LightItems", "torch=10, slendermod:laterne=25");
         itemsList.setComment("Item IDs that shine light while held. Armor Items also work when worn. [ONLY ON YOURSELF]");
-        itemsMap = new ItemConfigHelper(itemsList.getString(), 15);
+        itemsMap = new ItemConfigHelper(itemsList.getString(), 25);
         
         Property notWaterProofList = config.get(Configuration.CATEGORY_GENERAL, "TurnedOffByWaterItems", "torch,lava_bucket");
         notWaterProofList.setComment("Item IDs that do not shine light when held in water, have to be present in LightItems.");

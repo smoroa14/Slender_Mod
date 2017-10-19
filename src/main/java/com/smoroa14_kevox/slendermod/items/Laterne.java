@@ -71,7 +71,7 @@ public class Laterne extends ItemTool implements IDynamicLightSource {
 
     @Override
     public int getLightLevel() {
-        return 10;
+        return 30;
     }
 }
 

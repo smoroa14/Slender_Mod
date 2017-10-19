@@ -65,11 +65,11 @@ public class PlayerOthersLightSource
     {
         config.load();
         
-        Property itemsList = config.get(Configuration.CATEGORY_GENERAL, "LightItems", "torch,glowstone=12,glowstone_dust=10,lit_pumpkin,lava_bucket,redstone_torch=10,redstone=10,golden_helmet=14");
+        Property itemsList = config.get(Configuration.CATEGORY_GENERAL, "LightItems", "torch, slendermod:laterne=5");
         itemsList.setComment("Item IDs that shine light while held. Armor Items also work when worn. [ONLY ON OTHERS] Syntax: ItemID[-MetaValue]:LightValue, seperated by commas");
-        itemsMap = new ItemConfigHelper(itemsList.getString(), 15);
+        itemsMap = new ItemConfigHelper(itemsList.getString(), 5);
         
-        Property updateI = config.get(Configuration.CATEGORY_GENERAL, "update Interval", 1000);
+        Property updateI = config.get(Configuration.CATEGORY_GENERAL, "update Interval", 500);
         updateI.setComment("Update Interval time for all other player entities in milliseconds. The lower the better and costlier.");
         updateInterval = updateI.getInt();
         
