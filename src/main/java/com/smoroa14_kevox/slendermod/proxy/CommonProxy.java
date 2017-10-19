@@ -10,6 +10,7 @@ import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBook;
 import net.minecraft.item.ItemTool;
+import net.minecraft.item.ItemWritableBook;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
 import net.minecraftforge.event.RegistryEvent;
@@ -26,7 +27,7 @@ public class CommonProxy {
     //public static Block FLINT_STONE_BLOCK = new FlintstoneBlock("fredblock");
     public static Item BATTERIE = new Batterie("batterie");
     public static ItemTool LATERNE = new Laterne(Item.ToolMaterial.IRON, new TreeSet<>(), "laterne");
-public static ItemBook ZETTEL = new Zettel("zettel");
+public static ItemWritableBook ZETTEL = new Zettel("zettel");
 
     public void init(FMLInitializationEvent event){}
     public void preInit(FMLPreInitializationEvent event){}
