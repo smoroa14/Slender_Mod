@@ -2,12 +2,13 @@ package com.smoroa14_kevox.slendermod.items;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBook;
 import net.minecraft.item.ItemStack;
 import net.minecraft.util.ActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-public class Zettel extends Item{
+public class Zettel extends ItemBook{
     public Zettel(String name) {
         this.setRegistryName(name);
         this.setUnlocalizedName(name);

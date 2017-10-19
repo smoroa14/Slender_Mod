@@ -4,9 +4,11 @@ import com.smoroa14_kevox.slendermod.SlenderMod;
 import com.smoroa14_kevox.slendermod.items.Batterie;
 import com.smoroa14_kevox.slendermod.items.Laterne;
 
+import com.smoroa14_kevox.slendermod.items.Zettel;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemBook;
 import net.minecraft.item.ItemTool;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
@@ -24,7 +26,7 @@ public class CommonProxy {
     //public static Block FLINT_STONE_BLOCK = new FlintstoneBlock("fredblock");
     public static Item BATTERIE = new Batterie("batterie");
     public static ItemTool LATERNE = new Laterne(Item.ToolMaterial.IRON, new TreeSet<>(), "laterne");
-
+public static ItemBook ZETTEL = new Zettel("zettel");
 
     public void init(FMLInitializationEvent event){}
     public void preInit(FMLPreInitializationEvent event){}
@@ -42,6 +44,7 @@ public class CommonProxy {
         //event.getRegistry().register(new ItemBlock(FLINT_STONE_BLOCK).setRegistryName(FLINT_STONE_BLOCK.getRegistryName()));
         event.getRegistry().register(BATTERIE);
         event.getRegistry().register(LATERNE);
+        event.getRegistry().register(ZETTEL);
     }
 
     @SubscribeEvent
@@ -49,6 +52,7 @@ public class CommonProxy {
     {
         //registerRenderer(Item.getItemFromBlock(FLINT_STONE_BLOCK));
         registerRenderer(BATTERIE);
+        registerRenderer(ZETTEL);
         registerRenderer(LATERNE);
     }
 
