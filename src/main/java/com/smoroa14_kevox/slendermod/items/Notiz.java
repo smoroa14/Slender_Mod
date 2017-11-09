@@ -1,22 +1,18 @@
 package com.smoroa14_kevox.slendermod.items;
+
 import net.minecraft.client.Minecraft;
 import net.minecraft.client.gui.GuiScreenBook;
 import net.minecraft.creativetab.CreativeTabs;
-import net.minecraft.entity.EntityLivingBase;
 import net.minecraft.entity.player.EntityPlayer;
-import net.minecraft.item.*;
-import net.minecraft.nbt.NBTTagCompound;
-import net.minecraft.nbt.NBTTagList;
-import net.minecraft.stats.StatList;
+import net.minecraft.item.ItemStack;
+import net.minecraft.item.ItemWritableBook;
+import net.minecraft.item.ItemWrittenBook;
 import net.minecraft.util.ActionResult;
-import net.minecraft.util.EnumActionResult;
 import net.minecraft.util.EnumHand;
 import net.minecraft.world.World;
 
-import java.awt.image.WritableRaster;
-
-public class Zettel extends ItemWritableBook{
-    public Zettel(String name) {
+public class Notiz extends ItemWrittenBook{
+    public Notiz(String name) {
         super();
         this.setRegistryName(name);
         this.setUnlocalizedName(name);
@@ -31,6 +27,4 @@ public class Zettel extends ItemWritableBook{
         m.displayGuiScreen(new GuiScreenBook(playerIn, playerIn.getHeldItem(handIn), true));
         return super.onItemRightClick(worldIn, playerIn, handIn);
     }
-
-
 }

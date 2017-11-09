@@ -104,15 +104,15 @@ public class EntityLivingEquipmentLightSource
             String horseArmorTexture = ((EntityHorse)ent).getVariantTexturePaths()[2];
             if (horseArmorTexture != null)
             {
-                if (horseArmorTexture.equals("textures/entity/horse/armor/horse_armor_gold.png"))
+                if (horseArmorTexture.equals("textures/entities/horse/armor/horse_armor_gold.png"))
                 {
                     return getLightFromItemStack(new ItemStack(Items.GOLDEN_HORSE_ARMOR)); // horsearmorgold
                 }
-                if (horseArmorTexture.equals("textures/entity/horse/armor/horse_armor_iron.png"))
+                if (horseArmorTexture.equals("textures/entities/horse/armor/horse_armor_iron.png"))
                 {
                     return getLightFromItemStack(new ItemStack(Items.IRON_HORSE_ARMOR)); // horsearmormetal
                 }
-                if (horseArmorTexture.equals("textures/entity/horse/armor/horse_armor_diamond.png"))
+                if (horseArmorTexture.equals("textures/entities/horse/armor/horse_armor_diamond.png"))
                 {
                     return getLightFromItemStack(new ItemStack(Items.DIAMOND_HORSE_ARMOR)); // butt stallion
                 }
