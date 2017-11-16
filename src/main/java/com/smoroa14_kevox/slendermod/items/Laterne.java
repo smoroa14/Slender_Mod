@@ -29,6 +29,7 @@ public class Laterne extends ItemTool implements IDynamicLightSource {
         this.setCreativeTab(CreativeTabs.MISC);
     }
 
+
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
         p = playerIn;
@@ -44,7 +45,7 @@ public class Laterne extends ItemTool implements IDynamicLightSource {
 
     public void onTick()
     {
-        if(activated)
+        if(!activated)
         {
             enableLight();
         }else{
@@ -55,6 +56,7 @@ public class Laterne extends ItemTool implements IDynamicLightSource {
     private void enableLight()
     {
         activated = true;
+        DynamicLights.removeLightSource(this);
         DynamicLights.addLightSource(this);
     }
 

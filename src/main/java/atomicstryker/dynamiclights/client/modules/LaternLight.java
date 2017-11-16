@@ -123,6 +123,7 @@ public class LaternLight {
                 // Loop all loaded Entities, find alive and valid other Player Entities
                 if (ent instanceof EntityOtherPlayerMP && ent.isEntityAlive())
                 {
+                    System.out.println("laterne!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
                     // now find them in the already tracked player adapters
                     boolean found = false;
                     Iterator<OtherPlayerAdapter> iter = trackedPlayers.iterator();
@@ -132,6 +133,7 @@ public class LaternLight {
                         adapter = iter.next();
                         if (adapter.getAttachmentEntity().equals(ent)) // already tracked!
                         {
+                            System.out.print("");
                             adapter.onTick(); // execute a tick
                             newList.add(adapter); // put them in the new list
                             found = true;

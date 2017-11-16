@@ -7,9 +7,9 @@ import com.smoroa14_kevox.slendermod.items.Laterne;
 
 import com.smoroa14_kevox.slendermod.items.Zettel;
 import net.minecraft.block.Block;
+import net.minecraft.client.Minecraft;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.entity.EnumCreatureType;
-import net.minecraft.entity.monster.EntityMob;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemBook;
 import net.minecraft.item.ItemTool;
@@ -75,9 +75,7 @@ public static ItemWritableBook ZETTEL = new Zettel("zettel");
     public static void registerSpawnEntity(Class entityClass, String name, int id, int primaryCOlor, int secondaryColor, boolean addSpawn, EnumCreatureType typeOfCreature)
     {
         //registerRenderer(Item.getItemFromBlock(FLINT_STONE_BLOCK));
-        registerRenderer(BATTERIE);
-        registerRenderer(ZETTEL);
-        registerRenderer(LATERNE);
+
     }
 
 }
