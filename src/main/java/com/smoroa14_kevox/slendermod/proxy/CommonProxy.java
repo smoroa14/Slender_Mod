@@ -35,7 +35,7 @@ public static ItemWritableBook ZETTEL = new Zettel("zettel");
 
 
     public void init(FMLInitializationEvent event){
-        EntityRegistry.registerModEntity(new ModelResourceLocation("slender","inventory"),Slender.class,"slender",1,this,80,3,true);
+        //EntityRegistry.registerModEntity(new ModelResourceLocation("slender","inventory"),Slender.class,"slender",1,this,80,3,true);
     }
     public void preInit(FMLPreInitializationEvent event){
     }
@@ -71,11 +71,5 @@ public static ItemWritableBook ZETTEL = new Zettel("zettel");
         ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(),"inventory"));
     }
 
-    @SubscribeEvent
-    public static void registerSpawnEntity(Class entityClass, String name, int id, int primaryCOlor, int secondaryColor, boolean addSpawn, EnumCreatureType typeOfCreature)
-    {
-        //registerRenderer(Item.getItemFromBlock(FLINT_STONE_BLOCK));
-
-    }
 
 }
