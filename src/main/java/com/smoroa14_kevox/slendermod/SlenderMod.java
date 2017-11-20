@@ -1,5 +1,6 @@
 package com.smoroa14_kevox.slendermod;
 
+import com.smoroa14_kevox.slendermod.commands.GameCommand;
 import com.smoroa14_kevox.slendermod.proxy.CommonProxy;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.Mod.EventHandler;
@@ -7,6 +8,7 @@ import net.minecraftforge.fml.common.SidedProxy;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPostInitializationEvent;
 import net.minecraftforge.fml.common.event.FMLPreInitializationEvent;
+import net.minecraftforge.fml.common.event.FMLServerStartingEvent;
 
 @Mod(modid = SlenderMod.MODID, version = SlenderMod.VERSION)
 public class SlenderMod
@@ -37,5 +39,13 @@ public class SlenderMod
     public void postInit(FMLPostInitializationEvent event)
     {
         proxy.postInit(event);
+    }
+
+    @EventHandler
+    public void serverLoad(FMLServerStartingEvent event)
+    {
+        // register server commands
+
+        event.registerServerCommand(new GameCommand());
     }
 }
