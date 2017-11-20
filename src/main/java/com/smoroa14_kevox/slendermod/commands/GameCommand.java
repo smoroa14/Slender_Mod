@@ -4,6 +4,9 @@ import com.smoroa14_kevox.slendermod.SlenderMod;
 import net.minecraft.command.CommandException;
 import net.minecraft.command.ICommand;
 import net.minecraft.command.ICommandSender;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
+import net.minecraft.potion.PotionHealth;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.text.ITextComponent;
@@ -14,9 +17,11 @@ import javax.annotation.Nullable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class GameCommand implements ICommand{
+public class GameCommand implements ICommand, Runnable{
 
     private final List aliases;
+    private Thread game;
+    private World w;
 
     public GameCommand() {
         aliases = new ArrayList();
@@ -77,7 +82,15 @@ public class GameCommand implements ICommand{
                 }
             });
 
-            String operation = args[0]
+            String operation = args[0];
+
+            if(operation.equals("start"))
+            {
+                game = new Thread(this);
+                game.start();
+                w = world;
+            }
+
             /*if (EntityList.stringToClassMapping.containsKey(fullEntityName))
             {
                 conjuredEntity = EntityList.createEntityByName(fullEntityName, world);
@@ -111,5 +124,16 @@ public class GameCommand implements ICommand{
     @Override
     public int compareTo(ICommand o) {
         return 0;
+    }
+
+    @Override
+    public void run() {
+        PotionEffect effect = new PotionEffect(new PotionHealth(false, 1), 10, 1);
+        w.playerEntities.get(0).addPotionEffect(effect);
+        try {
+            Thread.sleep(5);
+        }catch (InterruptedException e)
+        {
+        }
     }
 }
