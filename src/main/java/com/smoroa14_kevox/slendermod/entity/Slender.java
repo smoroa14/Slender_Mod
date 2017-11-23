@@ -1,5 +1,6 @@
 package com.smoroa14_kevox.slendermod.entity;
 
+import com.google.common.base.Predicate;
 import net.minecraft.block.Block;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
@@ -47,5 +48,25 @@ public class Slender extends EntityMob
         super(worldIn);
     }
 
+    protected void initEntityAI()
+    {
+        this.tasks.addTask(0, new EntityAISwimming(this));
+        this.tasks.addTask(2, new EntityAIAttackMelee(this, 1.0D, false));
+        this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D, 0.0F));
+        this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
+        this.tasks.addTask(8, new EntityAILookIdle(this));
+        this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false, new Class[0]));
+        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 10, true, false, new Predicate<EntityPlayer>()
+        {
+            public boolean apply(@Nullable EntityPlayer p_apply_1_)
+            {
+                return p_apply_1_.isPlayerFullyAsleep();
+            }
+        }));
+    }
 
+    public boolean canAttackClass(Class par1Class)
+    {
+        return EntityCreeper.class != par1Class && EntityGhast.class != par1Class;
+    }
 }

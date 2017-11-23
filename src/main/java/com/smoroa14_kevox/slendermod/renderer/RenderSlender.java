@@ -1,5 +1,6 @@
 package com.smoroa14_kevox.slendermod.renderer;
 
+import com.smoroa14_kevox.slendermod.SlenderMod;
 import com.smoroa14_kevox.slendermod.entity.Slender;
 import net.minecraft.client.model.ModelZombie;
 import net.minecraft.client.renderer.entity.RenderBiped;
@@ -13,7 +14,7 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 @SideOnly(Side.CLIENT)
 public class RenderSlender extends RenderBiped<Slender>
 {
-    private static final ResourceLocation ZOMBIE_TEXTURES = new ResourceLocation("entities/slender.png");
+    private static final ResourceLocation ZOMBIE_TEXTURES = new ResourceLocation(SlenderMod.MODID,"textures/entities/slender.png");
  public static ModelSlender model = new ModelSlender();
 
     public RenderSlender(RenderManager renderManagerIn)
