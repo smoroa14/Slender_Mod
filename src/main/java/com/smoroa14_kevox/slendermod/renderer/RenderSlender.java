@@ -13,19 +13,11 @@ import net.minecraftforge.fml.relauncher.SideOnly;
 public class RenderSlender extends RenderBiped<EntityZombie>
 {
     private static final ResourceLocation ZOMBIE_TEXTURES = new ResourceLocation("textures/entity/black.png");
+ public static ModelSlender model = new ModelSlender();
 
     public RenderSlender(RenderManager renderManagerIn)
     {
-        super(renderManagerIn, new ModelZombie(), 0.5F);
-        LayerBipedArmor layerbipedarmor = new LayerBipedArmor(this)
-        {
-            protected void initArmor()
-            {
-                this.modelLeggings = new ModelZombie(0.5F, true);
-                this.modelArmor = new ModelZombie(1.0F, true);
-            }
-        };
-        this.addLayer(layerbipedarmor);
+        super(renderManagerIn, model, 0.5F);
     }
 
     /**
