@@ -1,5 +1,6 @@
 package com.smoroa14_kevox.slendermod.renderer;
 
+import com.smoroa14_kevox.slendermod.entity.Slender;
 import net.minecraft.client.model.ModelZombie;
 import net.minecraft.client.renderer.entity.RenderBiped;
 import net.minecraft.client.renderer.entity.RenderManager;
@@ -10,9 +11,9 @@ import net.minecraftforge.fml.relauncher.Side;
 import net.minecraftforge.fml.relauncher.SideOnly;
 
 @SideOnly(Side.CLIENT)
-public class RenderSlender extends RenderBiped<EntityZombie>
+public class RenderSlender extends RenderBiped<Slender>
 {
-    private static final ResourceLocation ZOMBIE_TEXTURES = new ResourceLocation("textures/entity/black.png");
+    private static final ResourceLocation ZOMBIE_TEXTURES = new ResourceLocation("entities/slender.png");
  public static ModelSlender model = new ModelSlender();
 
     public RenderSlender(RenderManager renderManagerIn)
@@ -23,8 +24,8 @@ public class RenderSlender extends RenderBiped<EntityZombie>
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(EntityZombie entity)
+    protected ResourceLocation getEntityTexture(Slender entity)
     {
         return ZOMBIE_TEXTURES;
-    }
-}
+        }
+        }

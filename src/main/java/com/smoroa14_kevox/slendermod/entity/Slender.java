@@ -46,4 +46,6 @@ public class Slender extends EntityMob
     public Slender(World worldIn) {
         super(worldIn);
     }
+
+
 }
