@@ -45,6 +45,7 @@ public class GameCommand implements ICommand, Runnable{
 
     @Override
     public void execute(MinecraftServer server, ICommandSender sender, String[] args) throws CommandException {
+        System.out.println("--------------------------------------------------------------------------------------------------------------");
         World world = sender.getEntityWorld();
 
         if (world.isRemote)
@@ -113,7 +114,7 @@ public class GameCommand implements ICommand, Runnable{
 
     @Override
     public List<String> getTabCompletions(MinecraftServer server, ICommandSender sender, String[] args, @Nullable BlockPos targetPos) {
-        return null;
+        return aliases;
     }
 
     @Override
@@ -132,8 +133,9 @@ public class GameCommand implements ICommand, Runnable{
         w.playerEntities.get(0).addPotionEffect(effect);
         try {
             Thread.sleep(5);
-        }catch (InterruptedException e)
-        {
+        } catch (InterruptedException e) {
         }
     }
+
+
 }

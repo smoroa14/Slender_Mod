@@ -3,6 +3,7 @@ package com.smoroa14_kevox.slendermod.proxy;
 import com.smoroa14_kevox.slendermod.SlenderMod;
 import com.smoroa14_kevox.slendermod.entity.Slender;
 import com.smoroa14_kevox.slendermod.items.Batterie;
+import com.smoroa14_kevox.slendermod.items.GameStarter;
 import com.smoroa14_kevox.slendermod.items.Laterne;
 
 import com.smoroa14_kevox.slendermod.items.Zettel;
@@ -29,8 +30,9 @@ import java.util.TreeSet;
 public class CommonProxy {
     //public static Block FLINT_STONE_BLOCK = new FlintstoneBlock("fredblock");
     public static Item BATTERIE = new Batterie("batterie");
+    public static Item REMOTE = new GameStarter("remote");
     public static ItemTool LATERNE = new Laterne(Item.ToolMaterial.IRON, new TreeSet<>(), "laterne");
-public static ItemWritableBook ZETTEL = new Zettel("zettel");
+    public static ItemWritableBook ZETTEL = new Zettel("zettel");
 
 
     public void init(FMLInitializationEvent event){
@@ -53,6 +55,7 @@ public static ItemWritableBook ZETTEL = new Zettel("zettel");
         event.getRegistry().register(BATTERIE);
         event.getRegistry().register(LATERNE);
         event.getRegistry().register(ZETTEL);
+        event.getRegistry().register(REMOTE);
     }
 
     @SubscribeEvent
@@ -62,6 +65,7 @@ public static ItemWritableBook ZETTEL = new Zettel("zettel");
         registerRenderer(BATTERIE);
         registerRenderer(ZETTEL);
         registerRenderer(LATERNE);
+        registerRenderer(REMOTE);
     }
 
     @SubscribeEvent
