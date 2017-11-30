@@ -1,9 +1,8 @@
 ﻿{
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
-	"ambientocclusion": false,
 	"textures": {
-		"0": "items/remote",
-		"particle": "items/remote"
+		"0": "slendermod:items/remote",
+		"particle": "slendermod:items/remote"
 	},
 	"elements": [
 		{
@@ -1006,38 +1005,41 @@
 			"type": "cube"
 		}
 	],
-	"groups": [
-		0,
-		1,
-		2,
-		3,
-		{
-			"name": "group",
-			"isOpen": true,
-			"display": {"visibility": true, "autouv": true},
-			"children": [4, 5, 6, 7]
-		},
-		{
-			"name": "group",
-			"display": {"visibility": true, "autouv": true},
-			"children": [8, 9, 10, 11]
-		},
-		{
-			"name": "group",
-			"display": {"visibility": true, "autouv": true},
-			"children": [12, 13, 14, 15]
-		},
-		{
-			"name": "group",
-			"display": {"visibility": true, "autouv": true},
-			"children": [16, 17, 18, 19]
-		}
-	],
+	"groups": [0, 1, 2, 3],
 	"display": {
 		"thirdperson_righthand": {
-			"scale": [0.9, 0.9, 1],
-			"rotation": [80, 0, 0],
-			"translation": [0, 4.5, 6]
+			"scale": [1, 1, 1],
+			"rotation": [86, 0, 0],
+			"translation": [0, 3, 6.5]
+		},
+		"gui": {
+			"scale": [1.45, 1.45, 1.45],
+			"rotation": [90, 0, 0],
+			"translation": [0, -1, 0]
+		},
+		"fixed": {
+			"scale": [1, 1, 1],
+			"rotation": [90, 0, 180],
+			"translation": [0, 0, -8]
+		},
+		"ground": {
+			"scale": [1, 1, 1],
+			"translation": [0, 3.5, 0]
+		},
+		"firstperson_lefthand": {
+			"scale": [1, 1, 1],
+			"translation": [0, 4, 0],
+			"rotation": [48, 0, 0]
+		},
+		"firstperson_righthand": {
+			"scale": [1, 1, 1],
+			"rotation": [48, 0, 0],
+			"translation": [0, 4, 0]
+		},
+		"thirdperson_lefthand": {
+			"scale": [1, 1, 1],
+			"rotation": [86, 0, 0],
+			"translation": [0, 3, 6.5]
 		}
 	}
 }

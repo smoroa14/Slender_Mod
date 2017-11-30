@@ -22,7 +22,7 @@ import java.util.Random;
 @SideOnly(Side.CLIENT)
 public class RenderSlender extends RenderBiped<Slender>
 {
-    private static final ResourceLocation ENDERMAN_TEXTURES = new ResourceLocation("textures/entities/slender.png");
+    private static final ResourceLocation ENDERMAN_TEXTURES = new ResourceLocation("slendermod:entities/slender.png");
     private final Random rnd = new Random();
 
     public RenderSlender(RenderManager renderManagerIn)
