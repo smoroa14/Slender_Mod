@@ -115,11 +115,6 @@ public class Slender extends EntityMob
         Vec3d vec3d = new Vec3d(entity.posX,  entity.posY, entity.posZ);
         vec3d = vec3d.normalize();
 
-        boolean rechts = false;
-        boolean links = false;
-        boolean oben = false;
-        boolean unten = false;
-
         double d1 = vec3d.x;
         double d2 = vec3d.y;
         double d3 = vec3d.z;
