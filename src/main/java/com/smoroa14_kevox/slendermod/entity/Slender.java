@@ -106,15 +106,37 @@ public class Slender extends EntityMob
         return this.teleportTo(d0, d1, d2);
     }
 
-    protected boolean teleportToEntity(Entity p_70816_1_)
+    protected boolean teleportToEntity(Entity entity)
     {
-        Vec3d vec3d = new Vec3d(this.posX - p_70816_1_.posX, this.getEntityBoundingBox().minY + (double)(this.height / 2.0F) - p_70816_1_.posY + (double)p_70816_1_.getEyeHeight(), this.posZ - p_70816_1_.posZ);
+        Vec3d vec3d = new Vec3d(entity.posX,  entity.posY, entity.posZ);
         vec3d = vec3d.normalize();
-        double d0 = 16.0D;
-        double d1 = this.posX + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3d.x * 16.0D;
-        double d2 = this.posY + (double)(this.rand.nextInt(16) - 8) - vec3d.y * 16.0D;
-        double d3 = this.posZ + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3d.z * 16.0D;
-        return this.teleportTo(d1, d2, d3);
+
+        boolean rechts = false;
+        boolean links = false;
+        boolean oben = false;
+        boolean unten = false;
+
+        double d1 = vec3d.x;
+        double d2 = vec3d.y;
+        double d3 = vec3d.z;
+
+        float rotation = entity.getRotationYawHead() % 360;
+
+        if(rotation < 0)
+        {
+            rotation = 360 - rotation;
+        }
+
+        if(rotation >= 225 && rotation <= 315) d1+=2;
+        if(rotation <= 135 && rotation <= 45) d1-=2;
+        if(rotation >= 135 && rotation <= 225) d3+=2;
+        if(rotation <= 45 && rotation >= 315) d3+=2;
+
+        boolean ret = this.teleportTo(d1, d2, d3);
+
+        //this.playSound();
+
+        return ret;
     }
 
     /**
@@ -131,6 +153,7 @@ public class Slender extends EntityMob
             this.world.playSound((EntityPlayer)null, this.prevPosX, this.prevPosY, this.prevPosZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, this.getSoundCategory(), 1.0F, 1.0F);
             this.playSound(SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0F, 1.0F);
         }
+
 
         return flag;
     }

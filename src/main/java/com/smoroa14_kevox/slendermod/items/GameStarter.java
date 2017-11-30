@@ -35,6 +35,8 @@ public class GameStarter extends Item implements Runnable{
             currentWorld = worldIn;
             currentPlayer = playerIn;
             gameThread.start();
+        }else{
+            gameStarted = false;
         }
         return super.onItemRightClick(worldIn, playerIn, handIn);
     }
@@ -44,8 +46,9 @@ public class GameStarter extends Item implements Runnable{
         while (true)
         {
             //currentPlayer.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 10000, 1));
-            EntityRegistry.registerModEntity(new ResourceLocation("EntityPlayer"), EntityPlayer.class, "EntityPlayer", 1, this, 30, 1, true);
+            //EntityRegistry.registerModEntity(new ResourceLocation("EntityPlayer"), EntityPlayer.class, "EntityPlayer", 1, this, 30, 1, true);
             try {
+                System.out.println(currentPlayer.getRotationYawHead());
                 Thread.sleep(1000);
             } catch (InterruptedException e) {
                 e.printStackTrace();
