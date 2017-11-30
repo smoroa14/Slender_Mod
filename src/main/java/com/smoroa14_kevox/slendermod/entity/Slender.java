@@ -1,5 +1,6 @@
 package com.smoroa14_kevox.slendermod.entity;
 
+import com.google.common.base.Function;
 import com.google.common.base.Predicate;
 import net.minecraft.block.Block;
 import net.minecraft.entity.*;
@@ -181,7 +182,7 @@ public class Slender extends EntityMob
         return flag;
     }
 
-    
+
 
     public boolean canAttackClass(Class par1Class)
     {
