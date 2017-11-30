@@ -22,18 +22,18 @@ import java.util.Random;
 @SideOnly(Side.CLIENT)
 public class RenderSlender extends RenderBiped<Slender>
 {
-    private static final ResourceLocation ENDERMAN_TEXTURES = new ResourceLocation("slendermod:entities/slender.png");
+    private static final ResourceLocation ENDERMAN_TEXTURES = new ResourceLocation("slendermod:textures/entities/slender.png");
     private final Random rnd = new Random();
 
     public RenderSlender(RenderManager renderManagerIn)
     {
-        super(renderManagerIn, new ModelEnderman(0.0F), 0.5F);
+        super(renderManagerIn, new ModelSlender(0.0F), 0.5F);
 
     }
 
-    public ModelEnderman getMainModel()
+    public ModelSlender getMainModel()
     {
-        return (ModelEnderman)super.getMainModel();
+        return (ModelSlender)super.getMainModel();
     }
 
     /**
@@ -42,7 +42,7 @@ public class RenderSlender extends RenderBiped<Slender>
     public void doRender(Slender entity, double x, double y, double z, float entityYaw, float partialTicks)
     {
 
-        ModelEnderman modelenderman = this.getMainModel();
+        ModelSlender modelenderman = this.getMainModel();
 
 
 
@@ -54,7 +54,7 @@ public class RenderSlender extends RenderBiped<Slender>
     /**
      * Returns the location of an entity's texture. Doesn't seem to be called unless you call Render.bindEntityTexture.
      */
-    protected ResourceLocation getEntityTexture(EntityEnderman entity)
+    protected ResourceLocation getEntityTexture(Slender entity)
     {
         return ENDERMAN_TEXTURES;
     }

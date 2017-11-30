@@ -2,8 +2,8 @@
 	"credit": "Made with Blockbench, a free, modern block model editor by JannisX11",
 	"ambientocclusion": false,
 	"textures": {
-		"0": "slendermod:entities/slender",
-		"particle": "slendermod:entities/slender"
+		"0": "slendermod:entities/slender.png",
+		"particle": "slendermod:entities/slender.png"
 	},
 
 	"elements": [
