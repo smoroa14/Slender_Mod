@@ -19,7 +19,6 @@ public class Laterne extends ItemTool {
         this.setUnlocalizedName(name);
         this.setCreativeTab(CreativeTabs.MISC);
     }
-
 /*
     @Override
     public ActionResult<ItemStack> onItemRightClick(World worldIn, EntityPlayer playerIn, EnumHand handIn) {
