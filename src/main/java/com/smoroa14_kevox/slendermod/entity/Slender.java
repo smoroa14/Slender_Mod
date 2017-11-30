@@ -29,6 +29,7 @@ import net.minecraft.util.SoundEvent;
 import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.MathHelper;
+import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.DifficultyInstance;
 import net.minecraft.world.EnumDifficulty;
 import net.minecraft.world.World;
@@ -64,6 +65,77 @@ public class Slender extends EntityMob
             }
         }));
     }
+
+    protected void applyEntityAttributes()
+    {
+        super.applyEntityAttributes();
+        this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.30000001192092896D);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(7.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0D);
+    }
+
+    protected void updateAITasks()
+    {
+        if (this.isWet())
+        {
+            this.attackEntityFrom(DamageSource.DROWN, 1.0F);
+        }
+
+
+            float f = this.getBrightness();
+
+            if (f > 0.5F && this.world.canSeeSky(new BlockPos(this)) && this.rand.nextFloat() * 30.0F < (f - 0.4F) * 2.0F)
+            {
+                this.setAttackTarget((EntityLivingBase)null);
+                this.teleportRandomly();
+            }
+
+
+        super.updateAITasks();
+    }
+
+    /**
+     * Teleport the enderman to a random nearby position
+     */
+    protected boolean teleportRandomly()
+    {
+        double d0 = this.posX + (this.rand.nextDouble() - 0.5D) * 64.0D;
+        double d1 = this.posY + (double)(this.rand.nextInt(64) - 32);
+        double d2 = this.posZ + (this.rand.nextDouble() - 0.5D) * 64.0D;
+        return this.teleportTo(d0, d1, d2);
+    }
+
+    protected boolean teleportToEntity(Entity p_70816_1_)
+    {
+        Vec3d vec3d = new Vec3d(this.posX - p_70816_1_.posX, this.getEntityBoundingBox().minY + (double)(this.height / 2.0F) - p_70816_1_.posY + (double)p_70816_1_.getEyeHeight(), this.posZ - p_70816_1_.posZ);
+        vec3d = vec3d.normalize();
+        double d0 = 16.0D;
+        double d1 = this.posX + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3d.x * 16.0D;
+        double d2 = this.posY + (double)(this.rand.nextInt(16) - 8) - vec3d.y * 16.0D;
+        double d3 = this.posZ + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3d.z * 16.0D;
+        return this.teleportTo(d1, d2, d3);
+    }
+
+    /**
+     * Teleport the enderman
+     */
+    private boolean teleportTo(double x, double y, double z)
+    {
+        net.minecraftforge.event.entity.living.EnderTeleportEvent event = new net.minecraftforge.event.entity.living.EnderTeleportEvent(this, x, y, z, 0);
+        if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event)) return false;
+        boolean flag = this.attemptTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ());
+
+        if (flag)
+        {
+            this.world.playSound((EntityPlayer)null, this.prevPosX, this.prevPosY, this.prevPosZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, this.getSoundCategory(), 1.0F, 1.0F);
+            this.playSound(SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0F, 1.0F);
+        }
+
+        return flag;
+    }
+
+    
 
     public boolean canAttackClass(Class par1Class)
     {
