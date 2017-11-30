@@ -5,6 +5,7 @@
 		"0": "entities/slender.png",
 		"particle": "entities/slender.png"
 	},
+
 	"elements": [
 		{
 			"name": "cube",
