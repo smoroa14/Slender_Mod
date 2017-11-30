@@ -16,6 +16,7 @@ import net.minecraft.init.Blocks;
 import net.minecraft.init.Items;
 import net.minecraft.init.SoundEvents;
 import net.minecraft.inventory.EntityEquipmentSlot;
+import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.nbt.NBTTagCompound;
 import net.minecraft.network.datasync.DataParameter;
@@ -95,6 +96,8 @@ public class Slender extends EntityMob
         super.updateAITasks();
     }
 
+
+
     /**
      * Teleport the enderman to a random nearby position
      */
@@ -142,6 +145,26 @@ public class Slender extends EntityMob
     /**
      * Teleport the enderman
      */
+    private boolean shouldAttackPlayer(EntityPlayer player)
+    {
+        ItemStack itemstack = player.inventory.armorInventory.get(3);
+
+        if (itemstack.getItem() == Item.getItemFromBlock(Blocks.PUMPKIN))
+        {
+            return false;
+        }
+        else
+        {
+            Vec3d vec3d = player.getLook(1.0F).normalize();
+            Vec3d vec3d1 = new Vec3d(this.posX - player.posX, this.getEntityBoundingBox().minY + (double)this.getEyeHeight() - (player.posY + (double)player.getEyeHeight()), this.posZ - player.posZ);
+            double d0 = vec3d1.lengthVector();
+            vec3d1 = vec3d1.normalize();
+            double d1 = vec3d.dotProduct(vec3d1);
+            return d1 > 1.0D - 0.025D / d0 ? player.canEntityBeSeen(this) : false;
+        }
+    }
+
+
     private boolean teleportTo(double x, double y, double z)
     {
         net.minecraftforge.event.entity.living.EnderTeleportEvent event = new net.minecraftforge.event.entity.living.EnderTeleportEvent(this, x, y, z, 0);
