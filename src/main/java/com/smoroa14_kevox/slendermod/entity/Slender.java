@@ -24,6 +24,7 @@ import net.minecraft.network.datasync.DataParameter;
 import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigateGround;
+import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.ResourceLocation;
@@ -47,8 +48,12 @@ import java.util.UUID;
 public class Slender extends EntityMob
 {
 
-    public Slender(World worldIn) {
+    public Slender(World worldIn)
+    {
         super(worldIn);
+        this.setSize(0.6F, 2.9F);
+        this.stepHeight = 1.0F;
+        this.setPathPriority(PathNodeType.WATER, -1.0F);
     }
 
     protected void initEntityAI()
@@ -74,7 +79,7 @@ public class Slender extends EntityMob
     {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0D);
-        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.30000001192092896D);
+        this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(7.0D);
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0D);
         //this.getEntityAttribute(SharedMonsterAttributes.ATTACK_SPEED).setBaseValue(20000);
@@ -85,6 +90,7 @@ public class Slender extends EntityMob
         if (this.isWet())
         {
             this.attackEntityFrom(DamageSource.DROWN, 1.0F);
+
         }
 
 
