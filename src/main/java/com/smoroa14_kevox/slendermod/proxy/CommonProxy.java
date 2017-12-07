@@ -15,6 +15,7 @@ import net.minecraft.item.ItemWritableBook;
 import net.minecraft.util.ResourceLocation;
 import net.minecraftforge.client.event.ModelRegistryEvent;
 import net.minecraftforge.client.model.ModelLoader;
+import net.minecraftforge.event.LootTableLoadEvent;
 import net.minecraftforge.event.RegistryEvent;
 import net.minecraftforge.fml.common.Mod;
 import net.minecraftforge.fml.common.event.FMLInitializationEvent;
@@ -79,6 +80,13 @@ public class CommonProxy {
     {
         //ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(),"inventory"));
         ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(),"inventory"));
+    }
+
+    @SubscribeEvent
+    public void lootLoad(LootTableLoadEvent evt) {
+        if (evt.getName().toString().equals(SlenderMod.MODID+":chests/slenderman")) {
+            // do stuff with evt.getTable()
+        }
     }
 
 

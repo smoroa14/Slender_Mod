@@ -1,0 +1,15 @@
+{
+  "pools": [
+    {
+      "name": "main",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "name": "slendermod:zettel",
+          "weight": 100
+        }
+      ]
+    }
+  ]
+}
