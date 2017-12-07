@@ -68,10 +68,7 @@ public class Slender extends EntityMob
         }));
     }
 
-    @Override
-    protected boolean canTriggerWalking() {
-        return false;
-    }
+
 
     protected void applyEntityAttributes()
     {
@@ -109,11 +106,10 @@ public class Slender extends EntityMob
      */
     protected boolean teleportRandomly()
     {
-        return false;
-        /*double d0 = this.posX + (this.rand.nextDouble() - 0.5D) * 20.0D;
+        double d0 = this.posX + (this.rand.nextDouble() - 0.5D) * 20.0D;
         double d1 = this.posY + (double)(this.rand.nextInt(20) - 10);
         double d2 = this.posZ + (this.rand.nextDouble() - 0.5D) * 20.0D;
-        return this.teleportTo(d0, d1, d2);*/
+        return this.teleportTo(d0, d1, d2);
     }
 
     protected boolean teleportToEntity(Entity entity)
