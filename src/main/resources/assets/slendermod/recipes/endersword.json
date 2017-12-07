@@ -1,0 +1,28 @@
+{
+ "type": "minecraft:crafting_shaped",
+ "pattern": [
+  "AAA",
+  "ABA",
+  "AAA"  ],
+ "key": {
+  "A": [
+   {
+    "item": "slendermod:zettel",
+    "data": 0
+   }
+  ]
+
+ ,
+  "B": [
+   {
+    "item": "minecraft:ender_eye",
+    "data": 0
+   }
+  ]
+
+ },
+ "result": {
+  "item": "slendermod:endersword",
+  "data": 0
+ }
+}
