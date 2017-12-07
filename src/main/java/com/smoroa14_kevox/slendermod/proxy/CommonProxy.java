@@ -2,14 +2,12 @@ package com.smoroa14_kevox.slendermod.proxy;
 
 import com.smoroa14_kevox.slendermod.SlenderMod;
 import com.smoroa14_kevox.slendermod.entity.Slender;
-import com.smoroa14_kevox.slendermod.items.Batterie;
-import com.smoroa14_kevox.slendermod.items.GameStarter;
-import com.smoroa14_kevox.slendermod.items.Laterne;
+import com.smoroa14_kevox.slendermod.items.*;
 
-import com.smoroa14_kevox.slendermod.items.Zettel;
 import net.minecraft.block.Block;
 import net.minecraft.client.renderer.block.model.ModelResourceLocation;
 import net.minecraft.item.Item;
+import net.minecraft.item.ItemSword;
 import net.minecraft.item.ItemTool;
 import net.minecraft.item.ItemWritableBook;
 import net.minecraft.util.ResourceLocation;
@@ -33,6 +31,7 @@ public class CommonProxy {
     public static Item REMOTE = new GameStarter("remote");
     public static ItemTool LATERNE = new Laterne(Item.ToolMaterial.IRON, new TreeSet<>(), "laterne");
     public static ItemWritableBook ZETTEL = new Zettel("zettel");
+    public static ItemSword ENDERSWORD = new EnderSword(Item.ToolMaterial.DIAMOND,"endersword");
 
 
     public void init(FMLInitializationEvent event){
@@ -56,6 +55,7 @@ public class CommonProxy {
         event.getRegistry().register(LATERNE);
         event.getRegistry().register(ZETTEL);
         event.getRegistry().register(REMOTE);
+        event.getRegistry().register(ENDERSWORD);
     }
 
     @SubscribeEvent
@@ -66,6 +66,7 @@ public class CommonProxy {
         registerRenderer(ZETTEL);
         registerRenderer(LATERNE);
         registerRenderer(REMOTE);
+       registerRenderer(ENDERSWORD);
     }
 
     @SubscribeEvent
