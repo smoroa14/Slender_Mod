@@ -77,6 +77,7 @@ public class Slender extends EntityMob
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0.30000001192092896D);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(7.0D);
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(64.0D);
+        //this.getEntityAttribute(SharedMonsterAttributes.ATTACK_SPEED).setBaseValue(20000);
     }
 
     protected void updateAITasks()
@@ -145,6 +146,7 @@ public class Slender extends EntityMob
      */
     private boolean shouldAttackPlayer(EntityPlayer player)
     {
+        System.out.println("---------------------------------------------------------------------------------------------------------------------------");
         ItemStack itemstack = player.inventory.armorInventory.get(3);
 
         if (itemstack.getItem() == Item.getItemFromBlock(Blocks.PUMPKIN))
