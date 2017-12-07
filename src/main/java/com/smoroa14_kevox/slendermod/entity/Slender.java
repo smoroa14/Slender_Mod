@@ -73,6 +73,8 @@ public class Slender extends EntityMob
         }));
     }
 
+
+
     protected void applyEntityAttributes()
     {
         super.applyEntityAttributes();
