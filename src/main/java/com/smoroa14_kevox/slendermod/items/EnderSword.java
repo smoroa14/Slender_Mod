@@ -16,6 +16,6 @@ this.isRepairable();
 
     @Override
     public boolean canHarvestBlock(IBlockState blockIn) {
-        return true;
+        return blockIn.getBlock().getHarvestLevel(blockIn) < 0;
     }
 }

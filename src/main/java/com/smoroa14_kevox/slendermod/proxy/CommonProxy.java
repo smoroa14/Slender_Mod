@@ -83,12 +83,6 @@ public class CommonProxy {
         ModelLoader.setCustomModelResourceLocation(item, 0, new ModelResourceLocation(item.getRegistryName(),"inventory"));
     }
 
-    @SubscribeEvent
-    public void lootLoad(LootTableLoadEvent evt) {
-        if (evt.getName().toString().equals(SlenderMod.MODID+":chests/slenderman")) {
-            // do stuff with evt.getTable()
-        }
-    }
 
 
 }
