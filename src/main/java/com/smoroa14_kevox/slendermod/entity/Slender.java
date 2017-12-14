@@ -192,13 +192,13 @@ public class Slender extends EntityMob {
 
     static class AIFindPlayer extends EntityAINearestAttackableTarget<EntityPlayer>
     {
-        private final EntityEnderman enderman;
+        private final Slender enderman;
         /** The player */
         private EntityPlayer player;
         private int aggroTime;
         private int teleportTime;
 
-        public AIFindPlayer(EntityEnderman p_i45842_1_)
+        public AIFindPlayer(Slender p_i45842_1_)
         {
             super(p_i45842_1_, EntityPlayer.class, false);
             this.enderman = p_i45842_1_;
