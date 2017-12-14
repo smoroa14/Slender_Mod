@@ -134,6 +134,7 @@ public class GameCommand implements ICommand, Runnable{
         try {
             Thread.sleep(5);
         } catch (InterruptedException e) {
+
         }
     }
 
