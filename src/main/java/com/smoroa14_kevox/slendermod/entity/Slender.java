@@ -27,6 +27,8 @@ import net.minecraft.network.datasync.DataSerializers;
 import net.minecraft.network.datasync.EntityDataManager;
 import net.minecraft.pathfinding.PathNavigateGround;
 import net.minecraft.pathfinding.PathNodeType;
+import net.minecraft.potion.Potion;
+import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.DamageSource;
 import net.minecraft.util.EntitySelectors;
 import net.minecraft.util.ResourceLocation;
@@ -76,9 +78,6 @@ public class Slender extends EntityMob {
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0);
         this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(7.0D);
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(128.0D);
-
-
-
 
 
     }
@@ -141,15 +140,14 @@ public class Slender extends EntityMob {
 
         return ret;*/
 
-        Vec3d vec3d = new Vec3d(this.posX - p_70816_1_.posX, this.getEntityBoundingBox().minY + (double)(this.height / 2.0F) - p_70816_1_.posY + (double)p_70816_1_.getEyeHeight(), this.posZ - p_70816_1_.posZ);
+        Vec3d vec3d = new Vec3d(this.posX - p_70816_1_.posX, this.getEntityBoundingBox().minY + (double) (this.height / 2.0F) - p_70816_1_.posY + (double) p_70816_1_.getEyeHeight(), this.posZ - p_70816_1_.posZ);
         vec3d = vec3d.normalize();
         double d0 = 16.0D;
         double d1 = this.posX + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3d.x * 16.0D;
-        double d2 = this.posY + (double)(this.rand.nextInt(16) - 8) - vec3d.y * 16.0D;
+        double d2 = this.posY + (double) (this.rand.nextInt(16) - 8) - vec3d.y * 16.0D;
         double d3 = this.posZ + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3d.z * 16.0D;
         return this.teleportTo(d1, d2, d3);
     }
-
 
 
     private boolean teleportTo(double x, double y, double z) {
@@ -167,18 +165,16 @@ public class Slender extends EntityMob {
         return flag;
     }
 
-    private boolean shouldAttackPlayer(EntityPlayer player)
-    {
+    private boolean shouldAttackPlayer(EntityPlayer player) {
+        System.out.println("should");
         ItemStack itemstack = player.inventory.armorInventory.get(3);
 
-        if (itemstack.getItem() == Item.getItemFromBlock(Blocks.PUMPKIN))
-        {
+
+        if (itemstack.getItem() == Item.getItemFromBlock(Blocks.PUMPKIN)) {
             return false;
-        }
-        else
-        {
+        } else {
             Vec3d vec3d = player.getLook(1.0F).normalize();
-            Vec3d vec3d1 = new Vec3d(this.posX - player.posX, this.getEntityBoundingBox().minY + (double)this.getEyeHeight() - (player.posY + (double)player.getEyeHeight()), this.posZ - player.posZ);
+            Vec3d vec3d1 = new Vec3d(this.posX - player.posX, this.getEntityBoundingBox().minY + (double) this.getEyeHeight() - (player.posY + (double) player.getEyeHeight()), this.posZ - player.posZ);
             double d0 = vec3d1.lengthVector();
             vec3d1 = vec3d1.normalize();
             double d1 = vec3d.dotProduct(vec3d1);
@@ -190,16 +186,16 @@ public class Slender extends EntityMob {
         return EntityCreeper.class != par1Class && EntityGhast.class != par1Class;
     }
 
-    static class AIFindPlayer extends EntityAINearestAttackableTarget<EntityPlayer>
-    {
+    static class AIFindPlayer extends EntityAINearestAttackableTarget<EntityPlayer> {
         private final Slender enderman;
-        /** The player */
+        /**
+         * The player
+         */
         private EntityPlayer player;
         private int aggroTime;
         private int teleportTime;
 
-        public AIFindPlayer(Slender p_i45842_1_)
-        {
+        public AIFindPlayer(Slender p_i45842_1_) {
             super(p_i45842_1_, EntityPlayer.class, false);
             this.enderman = p_i45842_1_;
         }
@@ -207,13 +203,10 @@ public class Slender extends EntityMob {
         /**
          * Returns whether the EntityAIBase should begin execution.
          */
-        public boolean shouldExecute()
-        {
+        public boolean shouldExecute() {
             double d0 = this.getTargetDistance();
-            this.player = this.enderman.world.getNearestAttackablePlayer(this.enderman.posX, this.enderman.posY, this.enderman.posZ, d0, d0, (Function)null, new Predicate<EntityPlayer>()
-            {
-                public boolean apply(@Nullable EntityPlayer p_apply_1_)
-                {
+            this.player = this.enderman.world.getNearestAttackablePlayer(this.enderman.posX, this.enderman.posY, this.enderman.posZ, d0, d0, (Function) null, new Predicate<EntityPlayer>() {
+                public boolean apply(@Nullable EntityPlayer p_apply_1_) {
                     return p_apply_1_ != null && Slender.AIFindPlayer.this.enderman.shouldAttackPlayer(p_apply_1_);
                 }
             });
@@ -223,8 +216,7 @@ public class Slender extends EntityMob {
         /**
          * Execute a one shot task or start executing a continuous task
          */
-        public void startExecuting()
-        {
+        public void startExecuting() {
             this.aggroTime = 5;
             this.teleportTime = 0;
         }
@@ -232,8 +224,7 @@ public class Slender extends EntityMob {
         /**
          * Reset the task's internal state. Called when this task is interrupted by another one
          */
-        public void resetTask()
-        {
+        public void resetTask() {
             this.player = null;
             super.resetTask();
         }
@@ -241,55 +232,38 @@ public class Slender extends EntityMob {
         /**
          * Returns whether an in-progress EntityAIBase should continue executing
          */
-        public boolean shouldContinueExecuting()
-        {
-            if (this.player != null)
-            {
-                if (!this.enderman.shouldAttackPlayer(this.player))
-                {
+        public boolean shouldContinueExecuting() {
+            if (this.player != null) {
+                if (!this.enderman.shouldAttackPlayer(this.player)) {
                     return false;
-                }
-                else
-                {
+                } else {
                     this.enderman.faceEntity(this.player, 10.0F, 10.0F);
                     return true;
                 }
-            }
-            else
-            {
-                return this.targetEntity != null && ((EntityPlayer)this.targetEntity).isEntityAlive() ? true : super.shouldContinueExecuting();
+            } else {
+                return this.targetEntity != null && ((EntityPlayer) this.targetEntity).isEntityAlive() ? true : super.shouldContinueExecuting();
             }
         }
 
         /**
          * Keep ticking a continuous task that has already been started
          */
-        public void updateTask()
-        {
-            if (this.player != null)
-            {
-                if (--this.aggroTime <= 0)
-                {
+        public void updateTask() {
+            if (this.player != null) {
+                if (--this.aggroTime <= 0) {
                     this.targetEntity = this.player;
                     this.player = null;
                     super.startExecuting();
                 }
-            }
-            else
-            {
-                if (this.targetEntity != null)
-                {
-                    if (this.enderman.shouldAttackPlayer((EntityPlayer)this.targetEntity))
-                    {
-                        if (((EntityPlayer)this.targetEntity).getDistanceSqToEntity(this.enderman) < 16.0D)
-                        {
+            } else {
+                if (this.targetEntity != null) {
+                    if (this.enderman.shouldAttackPlayer((EntityPlayer) this.targetEntity)) {
+                        if (((EntityPlayer) this.targetEntity).getDistanceSqToEntity(this.enderman) < 16.0D) {
                             this.enderman.teleportRandomly();
                         }
 
                         this.teleportTime = 0;
-                    }
-                    else if (((EntityPlayer)this.targetEntity).getDistanceSqToEntity(this.enderman) > 256.0D && this.teleportTime++ >= 30 && this.enderman.teleportToEntity(this.targetEntity))
-                    {
+                    } else if (((EntityPlayer) this.targetEntity).getDistanceSqToEntity(this.enderman) > 256.0D && this.teleportTime++ >= 30 && this.enderman.teleportToEntity(this.targetEntity)) {
                         this.teleportTime = 0;
                     }
                 }
@@ -299,4 +273,23 @@ public class Slender extends EntityMob {
         }
     }
 
+    @Override
+    public void onUpdate() {
+
+        List<EntityPlayer> players = this.world.playerEntities;
+
+        for (EntityPlayer player :
+                players) {
+            double x = player.posX - this.posX;
+            double y = player.posY - this.posY;
+            double z = player.posZ - this.posZ;
+            x = x<0?x*(-1):x;
+            y = y<0?y*(-1):y;
+            z = z<0?z*(-1):z;
+
+            if(x < 10 && y < 10 && z < 10)player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 10000, 1));
+        }
+
+        super.onUpdate();
+    }
 }
