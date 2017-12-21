@@ -357,7 +357,9 @@ public class Slender extends EntityEnderman {
             y = y<0?y*(-1):y;
             z = z<0?z*(-1):z;
 
-            if(x < 10 && y < 10 && z < 10)player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 17, 155));
+            if(x < 15 && y < 15 && z < 15)player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 17, 155));
+            if(x < 12 && y < 12 && z < 12)player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 18, 155));
+            if(x < 9 && y < 9 && z < 9)player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 19, 155));
         }
 
         super.onUpdate();
