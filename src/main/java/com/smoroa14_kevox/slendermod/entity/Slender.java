@@ -14,7 +14,8 @@ import net.minecraft.item.ItemStack;
 import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
-import net.minecraft.util.DamageSource;
+import net.minecraft.util.*;
+import net.minecraft.util.datafix.DataFixer;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
@@ -22,7 +23,7 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
-public class Slender extends EntityMob {
+public class Slender extends EntityEnderman {
 
     public Slender(World worldIn) {
         super(worldIn);
@@ -73,6 +74,36 @@ public class Slender extends EntityMob {
         super.updateAITasks();
     }
 
+    public boolean attackEntityFrom(DamageSource source, float amount)
+    {
+        if (this.isEntityInvulnerable(source))
+        {
+            return false;
+        }
+        else if (source instanceof EntityDamageSourceIndirect)
+        {
+            for (int i = 0; i < 64; ++i)
+            {
+                if (this.teleportRandomly())
+                {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+        else
+        {
+            boolean flag = super.attackEntityFrom(source, amount);
+
+            if (source.isUnblockable() && this.rand.nextInt(10) != 0)
+            {
+                this.teleportRandomly();
+            }
+
+            return flag;
+        }
+    }
 
     /**
      * Teleport the slenderman to a random nearby position
@@ -85,7 +116,19 @@ public class Slender extends EntityMob {
         return this.teleportTo(d0, d1, d2);
     }
 
-    protected boolean teleportToEntity(Entity p_70816_1_) {
+    protected boolean teleportToEntity(Entity p_70816_1_)
+    {
+        Vec3d vec3d = new Vec3d(this.posX - p_70816_1_.posX, this.getEntityBoundingBox().minY + (double)(this.height / 2.0F) - p_70816_1_.posY + (double)p_70816_1_.getEyeHeight(), this.posZ - p_70816_1_.posZ);
+        vec3d = vec3d.normalize();
+        double d0 = 16.0D;
+        double d1 = this.posX + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3d.x * 16.0D;
+        double d2 = this.posY + (double)(this.rand.nextInt(16) - 8) - vec3d.y * 16.0D;
+        double d3 = this.posZ + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3d.z * 16.0D;
+        return this.teleportTo(d1, d2, d3);
+    }
+
+
+    /*protected boolean teleportToEntity(Entity p_70816_1_) {
 
         System.out.println("----------------------------------------------------------------------------------------------------------- tte");
 
@@ -111,7 +154,7 @@ public class Slender extends EntityMob {
 
         //this.playSound();
 
-        return ret;*/
+        return ret;
 
         Vec3d vec3d = new Vec3d(this.posX - p_70816_1_.posX, this.getEntityBoundingBox().minY + (double) (this.height / 2.0F) - p_70816_1_.posY + (double) p_70816_1_.getEyeHeight(), this.posZ - p_70816_1_.posZ);
         vec3d = vec3d.normalize();
@@ -121,7 +164,7 @@ public class Slender extends EntityMob {
         double d3 = this.posZ + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3d.z * 16.0D;
         return this.teleportTo(d1, d2, d3);
     }
-
+*/
 
     private boolean teleportTo(double x, double y, double z) {
         System.out.println("------------------------------------------------------------------------------------------ tt");
@@ -222,22 +265,32 @@ public class Slender extends EntityMob {
         /**
          * Keep ticking a continuous task that has already been started
          */
-        public void updateTask() {
-            if (this.player != null) {
-                if (--this.aggroTime <= 0) {
+        public void updateTask()
+        {
+            if (this.player != null)
+            {
+                if (--this.aggroTime <= 0)
+                {
                     this.targetEntity = this.player;
                     this.player = null;
                     super.startExecuting();
                 }
-            } else {
-                if (this.targetEntity != null) {
-                    if (this.slenderman.shouldAttackPlayer((EntityPlayer) this.targetEntity)) {
-                        if (((EntityPlayer) this.targetEntity).getDistanceSqToEntity(this.slenderman) < 16.0D) {
+            }
+            else
+            {
+                if (this.targetEntity != null)
+                {
+                    if (this.slenderman.shouldAttackPlayer((EntityPlayer)this.targetEntity))
+                    {
+                        if (((EntityPlayer)this.targetEntity).getDistanceSqToEntity(this.slenderman) < 16.0D)
+                        {
                             this.slenderman.teleportRandomly();
                         }
 
                         this.teleportTime = 0;
-                    } else if (((EntityPlayer) this.targetEntity).getDistanceSqToEntity(this.slenderman) > 256.0D && this.teleportTime++ >= 30 && this.slenderman.teleportToEntity(this.targetEntity)) {
+                    }
+                    else if (((EntityPlayer)this.targetEntity).getDistanceSqToEntity(this.slenderman) > 256.0D && this.teleportTime++ >= 30 && this.slenderman.teleportToEntity(this.targetEntity))
+                    {
                         this.teleportTime = 0;
                     }
                 }
