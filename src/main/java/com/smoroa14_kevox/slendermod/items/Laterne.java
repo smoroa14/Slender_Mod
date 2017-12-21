@@ -23,6 +23,7 @@ public class Laterne extends ItemTool {
     public Laterne(ToolMaterial materialIn, Set<Block> effectiveBlocksIn, String name) {
         super(materialIn, effectiveBlocksIn);
         this.setRegistryName(name);
+        this.setMaxDamage(10);
         this.setUnlocalizedName(name);
         this.setCreativeTab(CreativeTabs.MISC);
     }

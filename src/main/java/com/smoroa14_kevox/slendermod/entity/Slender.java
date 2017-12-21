@@ -273,6 +273,49 @@ public class Slender extends EntityMob {
         }
     }
 
+    public void onLivingUpdate()
+    {
+        if (this.world.isDaytime() && !this.world.isRemote && !this.isChild() && this.shouldBurnInDay())
+        {
+            float f = this.getBrightness();
+
+            if (f > 0.5F && this.rand.nextFloat() * 30.0F < (f - 0.4F) * 2.0F && this.world.canSeeSky(new BlockPos(this.posX, this.posY + (double)this.getEyeHeight(), this.posZ)))
+            {
+                boolean flag = true;
+                ItemStack itemstack = this.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
+
+                if (!itemstack.isEmpty())
+                {
+                    if (itemstack.isItemStackDamageable())
+                    {
+                        itemstack.setItemDamage(itemstack.getItemDamage() + this.rand.nextInt(2));
+
+                        if (itemstack.getItemDamage() >= itemstack.getMaxDamage())
+                        {
+                            this.renderBrokenItemStack(itemstack);
+                            this.setItemStackToSlot(EntityEquipmentSlot.HEAD, ItemStack.EMPTY);
+                        }
+                    }
+
+                    flag = false;
+                }
+
+                if (flag)
+                {
+                    this.setFire(8);
+                }
+            }
+        }
+
+        super.onLivingUpdate();
+    }
+
+    protected boolean shouldBurnInDay()
+    {
+        return true;
+    }
+
+
     @Override
     public void onUpdate() {
 
@@ -287,7 +330,7 @@ public class Slender extends EntityMob {
             y = y<0?y*(-1):y;
             z = z<0?z*(-1):z;
 
-            if(x < 10 && y < 10 && z < 10)player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 10000, 1));
+            if(x < 10 && y < 10 && z < 10)player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 5, 1));
         }
 
         super.onUpdate();
