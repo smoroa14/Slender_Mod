@@ -2,6 +2,7 @@ package com.smoroa14_kevox.slendermod.entity;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
+import com.smoroa14_kevox.slendermod.proxy.CommonProxy;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.*;
@@ -21,6 +22,7 @@ import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
+import java.util.Iterator;
 import java.util.List;
 
 public class Slender extends EntityEnderman {
@@ -74,30 +76,21 @@ public class Slender extends EntityEnderman {
         super.updateAITasks();
     }
 
-    public boolean attackEntityFrom(DamageSource source, float amount)
-    {
-        if (this.isEntityInvulnerable(source))
-        {
+    public boolean attackEntityFrom(DamageSource source, float amount) {
+        if (this.isEntityInvulnerable(source)) {
             return false;
-        }
-        else if (source instanceof EntityDamageSourceIndirect)
-        {
-            for (int i = 0; i < 64; ++i)
-            {
-                if (this.teleportRandomly())
-                {
+        } else if (source instanceof EntityDamageSourceIndirect) {
+            for (int i = 0; i < 64; ++i) {
+                if (this.teleportRandomly()) {
                     return true;
                 }
             }
 
             return false;
-        }
-        else
-        {
+        } else {
             boolean flag = super.attackEntityFrom(source, amount);
 
-            if (source.isUnblockable() && this.rand.nextInt(10) != 0)
-            {
+            if (source.isUnblockable() && this.rand.nextInt(10) != 0) {
                 this.teleportRandomly();
             }
 
@@ -116,13 +109,12 @@ public class Slender extends EntityEnderman {
         return this.teleportTo(d0, d1, d2);
     }
 
-    protected boolean teleportToEntity(Entity p_70816_1_)
-    {
-        Vec3d vec3d = new Vec3d(this.posX - p_70816_1_.posX, this.getEntityBoundingBox().minY + (double)(this.height / 2.0F) - p_70816_1_.posY + (double)p_70816_1_.getEyeHeight(), this.posZ - p_70816_1_.posZ);
+    protected boolean teleportToEntity(Entity p_70816_1_) {
+        Vec3d vec3d = new Vec3d(this.posX - p_70816_1_.posX, this.getEntityBoundingBox().minY + (double) (this.height / 2.0F) - p_70816_1_.posY + (double) p_70816_1_.getEyeHeight(), this.posZ - p_70816_1_.posZ);
         vec3d = vec3d.normalize();
         double d0 = 16.0D;
         double d1 = this.posX + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3d.x * 16.0D;
-        double d2 = this.posY + (double)(this.rand.nextInt(16) - 8) - vec3d.y * 16.0D;
+        double d2 = this.posY + (double) (this.rand.nextInt(16) - 8) - vec3d.y * 16.0D;
         double d3 = this.posZ + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3d.z * 16.0D;
         return this.teleportTo(d1, d2, d3);
     }
@@ -203,8 +195,7 @@ public class Slender extends EntityEnderman {
     }
 
     static class AIFindPlayer extends EntityAINearestAttackableTarget<EntityPlayer> {
-        private final Slender slenderman
-                ;
+        private final Slender slenderman;
         /**
          * The player
          */
@@ -265,32 +256,22 @@ public class Slender extends EntityEnderman {
         /**
          * Keep ticking a continuous task that has already been started
          */
-        public void updateTask()
-        {
-            if (this.player != null)
-            {
-                if (--this.aggroTime <= 0)
-                {
+        public void updateTask() {
+            if (this.player != null) {
+                if (--this.aggroTime <= 0) {
                     this.targetEntity = this.player;
                     this.player = null;
                     super.startExecuting();
                 }
-            }
-            else
-            {
-                if (this.targetEntity != null)
-                {
-                    if (this.slenderman.shouldAttackPlayer((EntityPlayer)this.targetEntity))
-                    {
-                        if (((EntityPlayer)this.targetEntity).getDistanceSqToEntity(this.slenderman) < 16.0D)
-                        {
+            } else {
+                if (this.targetEntity != null) {
+                    if (this.slenderman.shouldAttackPlayer((EntityPlayer) this.targetEntity)) {
+                        if (((EntityPlayer) this.targetEntity).getDistanceSqToEntity(this.slenderman) < 16.0D) {
                             this.slenderman.teleportRandomly();
                         }
 
                         this.teleportTime = 0;
-                    }
-                    else if (((EntityPlayer)this.targetEntity).getDistanceSqToEntity(this.slenderman) > 256.0D && this.teleportTime++ >= 30 && this.slenderman.teleportToEntity(this.targetEntity))
-                    {
+                    } else if (((EntityPlayer) this.targetEntity).getDistanceSqToEntity(this.slenderman) > 256.0D && this.teleportTime++ >= 30 && this.slenderman.teleportToEntity(this.targetEntity)) {
                         this.teleportTime = 0;
                     }
                 }
@@ -300,25 +281,19 @@ public class Slender extends EntityEnderman {
         }
     }
 
-    public void onLivingUpdate()
-    {
-        if (this.world.isDaytime() && !this.world.isRemote && !this.isChild() && this.shouldBurnInDay())
-        {
+    public void onLivingUpdate() {
+        if (this.world.isDaytime() && !this.world.isRemote && !this.isChild() && this.shouldBurnInDay()) {
             float f = this.getBrightness();
 
-            if (f > 0.5F && this.rand.nextFloat() * 30.0F < (f - 0.4F) * 2.0F && this.world.canSeeSky(new BlockPos(this.posX, this.posY + (double)this.getEyeHeight(), this.posZ)))
-            {
+            if (f > 0.5F && this.rand.nextFloat() * 30.0F < (f - 0.4F) * 2.0F && this.world.canSeeSky(new BlockPos(this.posX, this.posY + (double) this.getEyeHeight(), this.posZ))) {
                 boolean flag = true;
                 ItemStack itemstack = this.getItemStackFromSlot(EntityEquipmentSlot.HEAD);
 
-                if (!itemstack.isEmpty())
-                {
-                    if (itemstack.isItemStackDamageable())
-                    {
+                if (!itemstack.isEmpty()) {
+                    if (itemstack.isItemStackDamageable()) {
                         itemstack.setItemDamage(itemstack.getItemDamage() + this.rand.nextInt(2));
 
-                        if (itemstack.getItemDamage() >= itemstack.getMaxDamage())
-                        {
+                        if (itemstack.getItemDamage() >= itemstack.getMaxDamage()) {
                             this.renderBrokenItemStack(itemstack);
                             this.setItemStackToSlot(EntityEquipmentSlot.HEAD, ItemStack.EMPTY);
                         }
@@ -327,8 +302,7 @@ public class Slender extends EntityEnderman {
                     flag = false;
                 }
 
-                if (flag)
-                {
+                if (flag) {
                     this.setFire(8);
                 }
             }
@@ -337,8 +311,7 @@ public class Slender extends EntityEnderman {
         super.onLivingUpdate();
     }
 
-    protected boolean shouldBurnInDay()
-    {
+    protected boolean shouldBurnInDay() {
         return true;
     }
 
@@ -353,13 +326,22 @@ public class Slender extends EntityEnderman {
             double x = player.posX - this.posX;
             double y = player.posY - this.posY;
             double z = player.posZ - this.posZ;
-            x = x<0?x*(-1):x;
-            y = y<0?y*(-1):y;
-            z = z<0?z*(-1):z;
+            x = x < 0 ? x * (-1) : x;
+            y = y < 0 ? y * (-1) : y;
+            z = z < 0 ? z * (-1) : z;
+            boolean light = false;
+            ItemStack item = player.getHeldItemMainhand();
+            ItemStack itemOff = player.getHeldItemOffhand();
+            if (item.getUnlocalizedName().equalsIgnoreCase(Blocks.TORCH.getUnlocalizedName())
+                    || itemOff.getUnlocalizedName().equalsIgnoreCase(Blocks.TORCH.getUnlocalizedName())) {
+                light = true;
+            }
 
-            if(x < 15 && y < 15 && z < 15)player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 17, 155));
-            if(x < 12 && y < 12 && z < 12)player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 18, 155));
-            if(x < 9 && y < 9 && z < 9)player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 19, 155));
+            if (x < 15 && y < 15 && z < 15) player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 17, 155));
+            if (x < 12 && y < 12 && z < 12 && !light)
+                player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 18, 155));
+            if (x < 9 && y < 9 && z < 9 && !light)
+                player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 19, 155));
         }
 
         super.onUpdate();
