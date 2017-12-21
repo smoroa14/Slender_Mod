@@ -326,11 +326,13 @@ public class Slender extends EntityMob {
             double x = player.posX - this.posX;
             double y = player.posY - this.posY;
             double z = player.posZ - this.posZ;
+            System.out.println(x + " - " + y + " - " + z);
             x = x<0?x*(-1):x;
             y = y<0?y*(-1):y;
             z = z<0?z*(-1):z;
+            System.out.println(x + " | " + y + " | " + z);
 
-            if(x < 10 && y < 10 && z < 10)player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 5, 1));
+            if(x < 10 && y < 10 && z < 10)player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 10, 1));
         }
 
         super.onUpdate();
