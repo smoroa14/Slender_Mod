@@ -23,6 +23,8 @@ import net.minecraft.world.World;
 import javax.annotation.Nullable;
 import java.util.List;
 
+import static net.minecraft.potion.Potion.*;
+
 public class Slender extends EntityEnderman {
 
     public Slender(World worldIn) {
@@ -326,13 +328,14 @@ public class Slender extends EntityEnderman {
             }
 
             if (x < 15 && y < 15 && z < 15) {
-                player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 17, 155));
+                player.addPotionEffect(new PotionEffect(getPotionById(15), 17, 155));
             }
             if (x < 12 && y < 12 && z < 12 && !light) {
-                player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 18, 155));
+                player.addPotionEffect(new PotionEffect(getPotionById(15), 18, 155));
             }
-            if (x < 9 && y < 9 && z < 9 && !light)
-                player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 19, 155));
+            if (x < 9 && y < 9 && z < 9 && !light) {
+                player.addPotionEffect(new PotionEffect(getPotionById(15), 19, 155));
+            }
         }
 
         super.onUpdate();
