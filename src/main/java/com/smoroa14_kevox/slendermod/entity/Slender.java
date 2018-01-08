@@ -39,12 +39,8 @@ public class Slender extends EntityEnderman {
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
         this.targetTasks.addTask(1, new Slender.AIFindPlayer(this));
-        this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false, new Class[0]));
-        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 10, true, false, new Predicate<EntityPlayer>() {
-            public boolean apply(@Nullable EntityPlayer p_apply_1_) {
-                return p_apply_1_.isPlayerFullyAsleep();
-            }
-        }));
+        this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false));
+        this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 10, true, false, (Predicate<EntityPlayer>) EntityPlayer::isPlayerFullyAsleep));
     }
 
     protected void applyEntityAttributes() {
@@ -68,7 +64,8 @@ public class Slender extends EntityEnderman {
             double d0 = vec3d1.lengthVector();
             vec3d1 = vec3d1.normalize();
             double d1 = vec3d.dotProduct(vec3d1);
-            return d1 > 1.0D - 0.025D / d0 ? player.canEntityBeSeen(this) : false;
+            if (d1 > (1.0D - (0.025D / d0))) if (player.canEntityBeSeen(this)) return true;
+            return false;
         }
     }
 
@@ -160,7 +157,7 @@ public class Slender extends EntityEnderman {
         boolean flag = this.attemptTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ());
 
         if (flag) {
-            this.world.playSound((EntityPlayer) null, this.prevPosX, this.prevPosY, this.prevPosZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, this.getSoundCategory(), 1.0F, 1.0F);
+            this.world.playSound(null, this.prevPosX, this.prevPosY, this.prevPosZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, this.getSoundCategory(), 1.0F, 1.0F);
             this.playSound(SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0F, 1.0F);
         }
 
@@ -197,7 +194,7 @@ public class Slender extends EntityEnderman {
         private int aggroTime;
         private int teleportTime;
 
-        public AIFindPlayer(Slender p_i45842_1_) {
+        private AIFindPlayer(Slender p_i45842_1_) {
             super(p_i45842_1_, EntityPlayer.class, false);
             this.slenderman = p_i45842_1_;
         }
@@ -207,11 +204,7 @@ public class Slender extends EntityEnderman {
          */
         public boolean shouldExecute() {
             double d0 = this.getTargetDistance();
-            this.player = this.slenderman.world.getNearestAttackablePlayer(this.slenderman.posX, this.slenderman.posY, this.slenderman.posZ, d0, d0, (Function) null, new Predicate<EntityPlayer>() {
-                public boolean apply(@Nullable EntityPlayer p_apply_1_) {
-                    return p_apply_1_ != null && Slender.AIFindPlayer.this.slenderman.shouldAttackPlayer(p_apply_1_);
-                }
-            });
+            this.player = this.slenderman.world.getNearestAttackablePlayer(this.slenderman.posX, this.slenderman.posY, this.slenderman.posZ, d0, d0, null, p_apply_1_ -> p_apply_1_ != null && AIFindPlayer.this.slenderman.shouldAttackPlayer(p_apply_1_));
             return this.player != null;
         }
 
@@ -243,7 +236,7 @@ public class Slender extends EntityEnderman {
                     return true;
                 }
             } else {
-                return this.targetEntity != null && ((EntityPlayer) this.targetEntity).isEntityAlive() ? true : super.shouldContinueExecuting();
+                return this.targetEntity != null && this.targetEntity.isEntityAlive() || super.shouldContinueExecuting();
             }
         }
 
@@ -259,11 +252,11 @@ public class Slender extends EntityEnderman {
                 }
             } else {
                 if (this.targetEntity != null) {
-                    if (this.slenderman.shouldAttackPlayer((EntityPlayer) this.targetEntity)) {
+                    if (this.slenderman.shouldAttackPlayer(this.targetEntity)) {
                         this.slenderman.teleportToEntity(this.targetEntity);
 
                         this.teleportTime = 0;
-                    } else if (((EntityPlayer) this.targetEntity).getDistanceSqToEntity(this.slenderman) > 256.0D && this.teleportTime++ >= 30 && this.slenderman.teleportToEntity(this.targetEntity)) {
+                    } else if (this.targetEntity.getDistanceSqToEntity(this.slenderman) > 256.0D && this.teleportTime++ >= 30 && this.slenderman.teleportToEntity(this.targetEntity)) {
                         this.teleportTime = 0;
                     }
                 }
@@ -303,7 +296,7 @@ public class Slender extends EntityEnderman {
         super.onLivingUpdate();
     }
 
-    protected boolean shouldBurnInDay() {
+    private boolean shouldBurnInDay() {
         return true;
     }
 
@@ -332,9 +325,12 @@ public class Slender extends EntityEnderman {
                 light = true;
             }
 
-            if (x < 15 && y < 15 && z < 15) player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 17, 155));
-            if (x < 12 && y < 12 && z < 12 && !light)
+            if (x < 15 && y < 15 && z < 15) {
+                player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 17, 155));
+            }
+            if (x < 12 && y < 12 && z < 12 && !light) {
                 player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 18, 155));
+            }
             if (x < 9 && y < 9 && z < 9 && !light)
                 player.addPotionEffect(new PotionEffect(Potion.getPotionById(15), 19, 155));
         }
