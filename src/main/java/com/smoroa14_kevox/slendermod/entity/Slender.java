@@ -2,7 +2,6 @@ package com.smoroa14_kevox.slendermod.entity;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
-import com.smoroa14_kevox.slendermod.proxy.CommonProxy;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.*;
@@ -16,13 +15,12 @@ import net.minecraft.pathfinding.PathNodeType;
 import net.minecraft.potion.Potion;
 import net.minecraft.potion.PotionEffect;
 import net.minecraft.util.*;
-import net.minecraft.util.datafix.DataFixer;
+import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
 
 import javax.annotation.Nullable;
-import java.util.Iterator;
 import java.util.List;
 
 public class Slender extends EntityEnderman {
@@ -32,14 +30,15 @@ public class Slender extends EntityEnderman {
         this.setSize(0.6F, 2.9F);
         this.stepHeight = 1.0F;
         this.setPathPriority(PathNodeType.WATER, -1.0F);
+        this.setEntityBoundingBox(new AxisAlignedBB(new Vec3d(0, 0, 0), new Vec3d(0.75, 3, 0.75)));
     }
 
     protected void initEntityAI() {
-        this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(2, new EntityAIAttackMelee(this, 1.0D, false));
         this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D, 0.0F));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
         this.tasks.addTask(8, new EntityAILookIdle(this));
+        this.targetTasks.addTask(1, new Slender.AIFindPlayer(this));
         this.targetTasks.addTask(2, new EntityAIHurtByTarget(this, false, new Class[0]));
         this.targetTasks.addTask(3, new EntityAINearestAttackableTarget(this, EntityPlayer.class, 10, true, false, new Predicate<EntityPlayer>() {
             public boolean apply(@Nullable EntityPlayer p_apply_1_) {
@@ -58,22 +57,19 @@ public class Slender extends EntityEnderman {
 
     }
 
-    protected void updateAITasks() {
-        if (this.isWet()) {
-            this.attackEntityFrom(DamageSource.DROWN, 1.0F);
+    private boolean shouldAttackPlayer(EntityPlayer player) {
+        ItemStack itemstack = player.inventory.armorInventory.get(3);
 
+        if (itemstack.getItem() == Item.getItemFromBlock(Blocks.PUMPKIN)) {
+            return false;
+        } else {
+            Vec3d vec3d = player.getLook(1.0F).normalize();
+            Vec3d vec3d1 = new Vec3d(this.posX - player.posX, this.getEntityBoundingBox().minY + (double) this.getEyeHeight() - (player.posY + (double) player.getEyeHeight()), this.posZ - player.posZ);
+            double d0 = vec3d1.lengthVector();
+            vec3d1 = vec3d1.normalize();
+            double d1 = vec3d.dotProduct(vec3d1);
+            return d1 > 1.0D - 0.025D / d0 ? player.canEntityBeSeen(this) : false;
         }
-
-
-        float f = this.getBrightness();
-
-        if (f > 0.5F && this.world.canSeeSky(new BlockPos(this)) && this.rand.nextFloat() * 30.0F < (f - 0.4F) * 2.0F) {
-            this.setAttackTarget((EntityLivingBase) null);
-            this.teleportRandomly();
-        }
-
-
-        super.updateAITasks();
     }
 
     public boolean attackEntityFrom(DamageSource source, float amount) {
@@ -102,10 +98,9 @@ public class Slender extends EntityEnderman {
      * Teleport the slenderman to a random nearby position
      */
     protected boolean teleportRandomly() {
-        System.out.println("-------------------------------------------------------------------------------------------------------- ttr");
-        double d0 = this.posX + (this.rand.nextDouble() - 0.5D) * 20.0D;
-        double d1 = this.posY + (double) (this.rand.nextInt(20) - 10);
-        double d2 = this.posZ + (this.rand.nextDouble() - 0.5D) * 20.0D;
+        double d0 = this.posX + (this.rand.nextDouble() - 0.5D) * 64.0D;
+        double d1 = this.posY + (double) (this.rand.nextInt(64) - 32);
+        double d2 = this.posZ + (this.rand.nextDouble() - 0.5D) * 64.0D;
         return this.teleportTo(d0, d1, d2);
     }
 
@@ -116,7 +111,8 @@ public class Slender extends EntityEnderman {
         double d1 = this.posX + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3d.x * 16.0D;
         double d2 = this.posY + (double) (this.rand.nextInt(16) - 8) - vec3d.y * 16.0D;
         double d3 = this.posZ + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3d.z * 16.0D;
-        return this.teleportTo(d1, d2, d3);
+        //return this.teleportTo(d1, d2, d3);
+        return this.teleportTo(p_70816_1_.posX, p_70816_1_.posY, p_70816_1_.posZ);
     }
 
 
@@ -148,18 +144,17 @@ public class Slender extends EntityEnderman {
 
         return ret;
 
-        Vec3d vec3d = new Vec3d(this.posX - p_70816_1_.posX, this.getEntityBoundingBox().minY + (double) (this.height / 2.0F) - p_70816_1_.posY + (double) p_70816_1_.getEyeHeight(), this.posZ - p_70816_1_.posZ);
+        Vec3d vec3d = new Vec3d(this.posX - player.posX, this.getEntityBoundingBox().minY + (double) (this.height / 2.0F) - player.posY + (double) player.getEyeHeight(), this.posZ - player.posZ);
         vec3d = vec3d.normalize();
         double d0 = 16.0D;
         double d1 = this.posX + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3d.x * 16.0D;
         double d2 = this.posY + (double) (this.rand.nextInt(16) - 8) - vec3d.y * 16.0D;
         double d3 = this.posZ + (this.rand.nextDouble() - 0.5D) * 8.0D - vec3d.z * 16.0D;
-        return this.teleportTo(d1, d2, d3);
-    }
-*/
+        //return this.teleportTo(d1, d2, d3);
+        return this.teleportTo(player.posX, player.posY, player.posZ);
+    }*/
 
     private boolean teleportTo(double x, double y, double z) {
-        System.out.println("------------------------------------------------------------------------------------------ tt");
         net.minecraftforge.event.entity.living.EnderTeleportEvent event = new net.minecraftforge.event.entity.living.EnderTeleportEvent(this, x, y, z, 0);
         if (net.minecraftforge.common.MinecraftForge.EVENT_BUS.post(event)) return false;
         boolean flag = this.attemptTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ());
@@ -169,11 +164,10 @@ public class Slender extends EntityEnderman {
             this.playSound(SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0F, 1.0F);
         }
 
-
         return flag;
     }
 
-    private boolean shouldAttackPlayer(EntityPlayer player) {
+    /*private boolean shouldAttackPlayer(EntityPlayer player) {
         System.out.println("should");
         ItemStack itemstack = player.inventory.armorInventory.get(3);
 
@@ -188,7 +182,7 @@ public class Slender extends EntityEnderman {
             double d1 = vec3d.dotProduct(vec3d1);
             return d1 > 1.0D - 0.025D / d0 ? player.canEntityBeSeen(this) : false;
         }
-    }
+    }*/
 
     public boolean canAttackClass(Class par1Class) {
         return EntityCreeper.class != par1Class && EntityGhast.class != par1Class;
@@ -266,9 +260,7 @@ public class Slender extends EntityEnderman {
             } else {
                 if (this.targetEntity != null) {
                     if (this.slenderman.shouldAttackPlayer((EntityPlayer) this.targetEntity)) {
-                        if (((EntityPlayer) this.targetEntity).getDistanceSqToEntity(this.slenderman) < 16.0D) {
-                            this.slenderman.teleportRandomly();
-                        }
+                        this.slenderman.teleportToEntity(this.targetEntity);
 
                         this.teleportTime = 0;
                     } else if (((EntityPlayer) this.targetEntity).getDistanceSqToEntity(this.slenderman) > 256.0D && this.teleportTime++ >= 30 && this.slenderman.teleportToEntity(this.targetEntity)) {
@@ -326,6 +318,9 @@ public class Slender extends EntityEnderman {
             double x = player.posX - this.posX;
             double y = player.posY - this.posY;
             double z = player.posZ - this.posZ;
+            x = x < 0 ? x * (-1) : x;
+            y = y < 0 ? y * (-1) : y;
+            z = z < 0 ? z * (-1) : z;
             x = x < 0 ? x * (-1) : x;
             y = y < 0 ? y * (-1) : y;
             z = z < 0 ? z * (-1) : z;
