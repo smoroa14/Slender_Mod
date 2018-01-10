@@ -1,0 +1,21 @@
+{
+  "pools": [
+    {
+      "name": "zettl",
+      "rolls": 1,
+      "entries": [
+        {
+          "type": "item",
+          "weight": 1,
+          "name": "slendermod:zettel",
+          "functions": [
+            {
+              "function": "set_count",
+              "count": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

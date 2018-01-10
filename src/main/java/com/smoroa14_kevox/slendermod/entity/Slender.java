@@ -2,6 +2,7 @@ package com.smoroa14_kevox.slendermod.entity;
 
 import com.google.common.base.Function;
 import com.google.common.base.Predicate;
+import com.smoroa14_kevox.slendermod.proxy.CommonProxy;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
 import net.minecraft.entity.monster.*;
@@ -19,6 +20,7 @@ import net.minecraft.util.math.AxisAlignedBB;
 import net.minecraft.util.math.BlockPos;
 import net.minecraft.util.math.Vec3d;
 import net.minecraft.world.World;
+import net.minecraft.world.storage.loot.LootTableList;
 
 import javax.annotation.Nullable;
 import java.util.List;
@@ -36,6 +38,7 @@ public class Slender extends EntityEnderman {
     }
 
     protected void initEntityAI() {
+        this.tasks.addTask(0, new EntityAISwimming(this));
         this.tasks.addTask(2, new EntityAIAttackMelee(this, 1.0D, false));
         this.tasks.addTask(7, new EntityAIWanderAvoidWater(this, 1.0D, 0.0F));
         this.tasks.addTask(8, new EntityAIWatchClosest(this, EntityPlayer.class, 8.0F));
@@ -49,13 +52,44 @@ public class Slender extends EntityEnderman {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0D);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(100.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0D);
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(128.0D);
 
 
     }
 
-    private boolean shouldAttackPlayer(EntityPlayer player) {
+    @Nullable
+    @Override
+    protected Item getDropItem() {
+        return CommonProxy.ZETTEL;
+    }
+
+    @Nullable
+    @Override
+    protected ResourceLocation getLootTable() {
+        System.out.println(LootTableHandler.SLENDER.getResourcePath() + " --------------------------------------------------------------------------------------------------");
+        return LootTableHandler.SLENDER;
+    }
+
+    protected void updateAITasks() {
+        if (this.isWet()) {
+            this.attackEntityFrom(DamageSource.DROWN, 1.0F);
+
+        }
+
+
+        float f = this.getBrightness();
+
+        if (f > 0.5F && this.world.canSeeSky(new BlockPos(this)) && this.rand.nextFloat() * 30.0F < (f - 0.4F) * 2.0F) {
+            this.setAttackTarget((EntityLivingBase) null);
+            this.teleportRandomly();
+        }
+
+
+        super.updateAITasks();
+    }
+
+    private boolean shouldAttackPlayer(EntityPlayer player, boolean a) {
         ItemStack itemstack = player.inventory.armorInventory.get(3);
 
         if (itemstack.getItem() == Item.getItemFromBlock(Blocks.PUMPKIN)) {
@@ -66,8 +100,25 @@ public class Slender extends EntityEnderman {
             double d0 = vec3d1.lengthVector();
             vec3d1 = vec3d1.normalize();
             double d1 = vec3d.dotProduct(vec3d1);
-            if (d1 > (1.0D - (0.025D / d0))) if (player.canEntityBeSeen(this)) return true;
+            if (d1 > (1.0D - (0.025D / d0))) if (player.canEntityBeSeen(this) && this.canEntityBeSeen(player)) return true;
             return false;
+        }
+    }
+
+    private boolean shouldAttackPlayer(EntityPlayer player) {
+        ItemStack itemstack = player.inventory.armorInventory.get(3);
+
+        if (itemstack.getItem() == Item.getItemFromBlock(Blocks.PUMPKIN)) {
+            return false;
+        } else {
+            Vec3d slender = this.getPositionVector();
+            Vec3d attacker = player.getPositionVector();
+            if(slender.squareDistanceTo(attacker) < 16)
+            {
+                return true;
+            }else{
+                return shouldAttackPlayer(player, true);
+            }
         }
     }
 
@@ -313,9 +364,6 @@ public class Slender extends EntityEnderman {
             double x = player.posX - this.posX;
             double y = player.posY - this.posY;
             double z = player.posZ - this.posZ;
-            x = x < 0 ? x * (-1) : x;
-            y = y < 0 ? y * (-1) : y;
-            z = z < 0 ? z * (-1) : z;
             x = x < 0 ? x * (-1) : x;
             y = y < 0 ? y * (-1) : y;
             z = z < 0 ? z * (-1) : z;
