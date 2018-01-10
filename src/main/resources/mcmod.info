@@ -37,7 +37,7 @@
   "updateUrl": "",
   "authorList": ["albkea14 and smoroa14"],
   "credits": "We tryied our best so we hope you enjoy it!",
-  "logoFile": "",
+  "logoFile": "assets/slendermod/textures/slender.png",
   "screenshots": [],
   "dependencies": []
 }
