@@ -52,7 +52,7 @@ public class Slender extends EntityEnderman {
         super.applyEntityAttributes();
         this.getEntityAttribute(SharedMonsterAttributes.MAX_HEALTH).setBaseValue(40.0D);
         this.getEntityAttribute(SharedMonsterAttributes.MOVEMENT_SPEED).setBaseValue(0);
-        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(0.0D);
+        this.getEntityAttribute(SharedMonsterAttributes.ATTACK_DAMAGE).setBaseValue(100.0D);
         this.getEntityAttribute(SharedMonsterAttributes.FOLLOW_RANGE).setBaseValue(128.0D);
 
 
@@ -100,7 +100,7 @@ public class Slender extends EntityEnderman {
             double d0 = vec3d1.lengthVector();
             vec3d1 = vec3d1.normalize();
             double d1 = vec3d.dotProduct(vec3d1);
-            if (d1 > (1.0D - (0.025D / d0))) if (player.canEntityBeSeen(this) && this.canEntityBeSeen(player)) return true;
+            if (d1 > (1.0D - (0.025D / d0))) if (player.canEntityBeSeen(this)) return true;
             return false;
         }
     }
@@ -305,7 +305,7 @@ public class Slender extends EntityEnderman {
                 }
             } else {
                 if (this.targetEntity != null) {
-                    if (this.slenderman.shouldAttackPlayer(this.targetEntity)) {
+                    if (this.slenderman.shouldAttackPlayer(this.targetEntity) && this.teleportTime++ >= 10) {
                         this.slenderman.teleportToEntity(this.targetEntity);
 
                         this.teleportTime = 0;

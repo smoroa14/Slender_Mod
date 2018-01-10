@@ -18,7 +18,6 @@ public class EnderSword extends ItemSword{
     public EnderSword(ToolMaterial material, String name) {
         super(material);
         this.setRegistryName(name);
-
         this.setUnlocalizedName(name);
         this.setCreativeTab(CreativeTabs.COMBAT);
         this.isRepairable();
