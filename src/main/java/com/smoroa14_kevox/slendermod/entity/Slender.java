@@ -210,7 +210,7 @@ public class Slender extends EntityEnderman {
         boolean flag = this.attemptTeleport(event.getTargetX(), event.getTargetY(), event.getTargetZ());
 
         if (flag) {
-            this.world.playSound(null, this.prevPosX, this.prevPosY, this.prevPosZ, SoundEvents.ENTITY_ENDERMEN_TELEPORT, this.getSoundCategory(), 1.0F, 1.0F);
+            this.world.playSound(null, this.prevPosX, this.prevPosY, this.prevPosZ, SoundEvents.AMBIENT_CAVE, this.getSoundCategory(), 1.0F, 1.0F);
             this.playSound(SoundEvents.ENTITY_ENDERMEN_TELEPORT, 1.0F, 1.0F);
         }
 
