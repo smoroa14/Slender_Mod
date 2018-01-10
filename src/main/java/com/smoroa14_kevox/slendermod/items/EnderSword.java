@@ -1,6 +1,7 @@
 package com.smoroa14_kevox.slendermod.items;
 
 import com.google.common.collect.Multimap;
+import com.smoroa14_kevox.slendermod.entity.Slender;
 import net.minecraft.block.state.IBlockState;
 import net.minecraft.creativetab.CreativeTabs;
 import net.minecraft.entity.EntityLivingBase;
@@ -10,6 +11,7 @@ import net.minecraft.inventory.EntityEquipmentSlot;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.ItemSword;
+import net.minecraft.util.DamageSource;
 
 public class EnderSword extends ItemSword{
 
@@ -31,6 +33,10 @@ public class EnderSword extends ItemSword{
 
     public boolean hitEntity(ItemStack stack, EntityLivingBase target, EntityLivingBase attacker)
     {
+        if(target instanceof Slender)
+        {
+            target.attackEntityFrom(new DamageSource("Slendersword"), 100000);
+        }
         stack.damageItem(1, attacker);
         return true;
     }

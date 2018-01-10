@@ -5,6 +5,7 @@ import com.google.common.base.Predicate;
 import com.smoroa14_kevox.slendermod.proxy.CommonProxy;
 import net.minecraft.entity.*;
 import net.minecraft.entity.ai.*;
+import net.minecraft.entity.boss.EntityWither;
 import net.minecraft.entity.monster.*;
 import net.minecraft.entity.player.EntityPlayer;
 import net.minecraft.init.Blocks;
@@ -113,10 +114,9 @@ public class Slender extends EntityEnderman {
         } else {
             Vec3d slender = this.getPositionVector();
             Vec3d attacker = player.getPositionVector();
-            if(slender.squareDistanceTo(attacker) < 16)
-            {
+            if (slender.squareDistanceTo(attacker) < 16) {
                 return true;
-            }else{
+            } else {
                 return shouldAttackPlayer(player, true);
             }
         }
@@ -353,6 +353,7 @@ public class Slender extends EntityEnderman {
         return true;
     }
 
+    private int currentVision = 0;
 
     @Override
     public void onUpdate() {
@@ -375,15 +376,22 @@ public class Slender extends EntityEnderman {
                 light = true;
             }
 
-            if (x < 15 && y < 15 && z < 15) {
-                player.addPotionEffect(new PotionEffect(getPotionById(15), 17, 155));
-            }
-            if (x < 12 && y < 12 && z < 12 && !light) {
-                player.addPotionEffect(new PotionEffect(getPotionById(15), 18, 155));
-            }
             if (x < 9 && y < 9 && z < 9 && !light) {
+                if (currentVision != 2) {
+                    this.playSound(SoundEvents.ENTITY_WITHER_AMBIENT, 10, 10);
+                    currentVision = 2;
+                }
                 player.addPotionEffect(new PotionEffect(getPotionById(15), 19, 155));
-            }
+            } else if (x < 15 && y < 15 && z < 15 && !light) {
+                if (currentVision != 1) {
+                    this.playSound(SoundEvents.ENTITY_WITHER_AMBIENT, 10, 10);
+                    currentVision = 1;
+                }
+                player.addPotionEffect(new PotionEffect(getPotionById(15), 18, 155));
+                super.onUpdate();
+                return;
+            } else
+                currentVision = 0;
         }
 
         super.onUpdate();
