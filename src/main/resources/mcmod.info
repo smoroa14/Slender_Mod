@@ -28,15 +28,15 @@
   "dependencies": []
 },
  {
-  "modid": "testmod",
-  "name": "TestMod",
-  "description": "Example placeholder mod.",
+  "modid": "slendermod",
+  "name": "Slender-Mod",
+  "description": "This mod brings more spooks into your Minecraft with a new Mob, better Lightsources and a lot more!",
   "version": "${version}",
   "mcversion": "${mcversion}",
   "url": "",
   "updateUrl": "",
-  "authorList": ["Kevox"],
-  "credits": "The Forge and FML guys, for making this example",
+  "authorList": ["albkea14 and smoroa14"],
+  "credits": "We tryied our best so we hope you enjoy it!",
   "logoFile": "",
   "screenshots": [],
   "dependencies": []
