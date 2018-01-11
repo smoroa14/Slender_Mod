@@ -74,7 +74,7 @@ public class CommonProxy {
     public static void renderEntities(RegistryEvent.Register<EntityEntry> event)
     {
         ResourceLocation location = new ResourceLocation(SlenderMod.MODID, "entities/slender.png");
-        EntityRegistry.registerModEntity(location, Slender.class, "slender",0,SlenderMod.instance,64,1,true,0x00ff00,0x0000ff);
+        EntityRegistry.registerModEntity(location, Slender.class, "slender",0,SlenderMod.instance,64,1,true,0xffffff,0x000000);
     }
 
     private static void registerRenderer(Item item)
