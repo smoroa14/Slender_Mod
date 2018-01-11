@@ -390,6 +390,14 @@ public class Slender extends EntityEnderman {
                 player.addPotionEffect(new PotionEffect(getPotionById(15), 18, 155));
                 super.onUpdate();
                 return;
+            } else if (x < 18 && y < 18 && z < 18) {
+                if (currentVision != 1) {
+                    this.playSound(SoundEvents.ENTITY_WITHER_AMBIENT, 10, 10);
+                    currentVision = 1;
+                }
+                player.addPotionEffect(new PotionEffect(getPotionById(15), 17, 155));
+                super.onUpdate();
+                return;
             } else
                 currentVision = 0;
         }
